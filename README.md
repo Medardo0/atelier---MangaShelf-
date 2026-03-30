@@ -45,6 +45,17 @@ Point Négatif :
  abcense du footer 
  aucun detaile sur les manga en home page que des image
 
+ //////////////////////////////////////////////////
+ ////////////////////////////////////////////////
+
+ thème : Cataloque de Manga 
+ type de site :  Divértisement et informatif
+ public cible : Tous Type d'age, les fans de manga, et les personnes qui veulent découvrire se monde 
+ objectifs : informer les users sur les dernier manga publier, mais aussi aider les gens qui s'intersser et veulent rentrer dans se monde 
+ pages envisagées : admin, HomePage , acceuille , catalogue, nouveauté
+ fonctionnalités principales : ct
+ 
+
 
 
 
