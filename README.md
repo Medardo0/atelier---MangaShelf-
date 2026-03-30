@@ -1,100 +1,118 @@
 # atelier---MangaShelf-
 atelier-EFP
 
-🔍 Analyse concurrentielle
-🌐 Site 1 — Kana Manga
+#  atelier---MangaShelf-
 
-🔗 https://www.kana.fr/mangas/
+##  atelier-EFP
 
-✅ Points forts :
+---
 
-Cartes visuelles très propres (UI moderne)
-Images de haute qualité
-Typographie élégante et lisible
+## 🔍 Analyse concurrentielle
 
-❌ Points faibles :
+###  Site 1 — Kana Manga  
+ https://www.kana.fr/mangas/
 
-Palette de couleurs peu marquante
-Header trop chargé (multi-couleurs)
-Section hero peu impactante
-🌐 Site 2 — Manga News
+✅ **Points forts :**
+- Cartes visuelles très propres (UI moderne)  
+- Images de haute qualité  
+- Typographie élégante et lisible  
 
-🔗 https://www.manga-news.com/index.php/series/
+❌ **Points faibles :**
+- Palette de couleurs peu marquante  
+- Header trop chargé (multi-couleurs)  
+- Section hero peu impactante  
 
-✅ Points forts :
+---
 
-Header très visible et structuré
-Bonne hiérarchie des couleurs
-Section hero efficace
+### Site 2 — Manga News  
+https://www.manga-news.com/index.php/series/
 
-❌ Points faibles :
+✅ **Points forts :**
+- Header très visible et structuré  
+- Bonne hiérarchie des couleurs  
+- Section hero efficace  
 
-Slider trop rapide → perte de focus
-Footer peu travaillé
-Typographie basique
-Trop de publicités (UX dégradée)
-🌐 Site 3 — Manga News Series
+❌ **Points faibles :**
+- Slider trop rapide → perte de focus  
+- Footer peu travaillé  
+- Typographie basique  
+- Trop de publicités (UX dégradée)  
 
-✅ Points forts :
+---
 
-Belle palette de couleurs
-Menu latéral intéressant
-Effets visuels réussis
+### Site 3 — Manga News Series  
 
-❌ Points faibles :
+✅ **Points forts :**
+- Belle palette de couleurs  
+- Menu latéral intéressant  
+- Effets visuels réussis  
 
-Tout est sur une seule page (manque de structure)
-Résumés trop longs
-Typographie classique
-Absence de footer
-Page d’accueil peu informative (images sans contexte)
-🎯 Concept du site
+❌ **Points faibles :**
+- Tout est sur une seule page  
+- Résumés trop longs  
+- Typographie classique  
+- Absence de footer  
+- Page d’accueil peu informative  
 
-🧩 Thème : Catalogue de mangas
-🎭 Type : Divertissement & Informatif
+---
 
-👥 Public cible :
+##  Concept du site
 
-Fans de manga
-Débutants curieux
-Tous les âges
+** Thème :** Catalogue de mangas  
+** Type :** Divertissement et informatif  
 
-🚀 Objectifs :
+** Public cible :**
+- Fans de manga  
+- Débutants  
+- Tous types d’âge  
 
-Présenter les derniers mangas sortis
-Aider les nouveaux utilisateurs à découvrir cet univers
-Offrir une navigation fluide et agréable
-📄 Pages prévues
-🏠 Home (Accueil)
-📚 Catalogue
-🆕 Nouveautés
-🔐 Admin (gestion du contenu)
-⚙️ Fonctionnalités principales
-🔍 Recherche de mangas
-🧾 Fiches détaillées (résumé, image, genre…)
-🧠 Système de filtres (genre, popularité…)
-⭐ Mise en avant des nouveautés
-📱 Design responsive (mobile-first)
-🖼️ Upload d’images (admin)
-📨 Formulaire de contact
-🎨 Direction artistique (important pour ton prof 👀)
-Style : moderne, immersif, inspiré des plateformes de streaming
-Couleurs : noir, blanc, rouge (style manga premium)
-Typographie : originale et impactante (éviter les polices classiques)
-UI : cartes visuelles + hover effects + animations légères
-🧪 Stack technique
-HTML / CSS / JavaScript
-JSON (données mangas)
-PHP (back-end simple / admin)
-💡 Améliorations prévues
-Ajouter un système de favoris ❤️
-Notation des mangas ⭐
-Connexion utilisateur 🔐
-API manga (si possible plus tard)
-🧙‍♂️ Vision finale
+**Objectifs :**
+- Informer sur les derniers mangas publiés  
+- Aider les nouveaux à découvrir cet univers  
+- Offrir une expérience fluide et moderne  
 
-Un site qui donne envie de scroll comme sur Netflix, mais pour les mangas.
-Pas juste une liste… une expérience.
+---
 
+##  Pages envisagées
 
+-  Accueil  
+-  Catalogue  
+- Nouveautés  
+-  Admin  
 
+---
+
+##  Fonctionnalités principales
+
+-  Recherche de mangas  
+-  Filtres (genre, popularité…)  
+-  Fiches détaillées  
+- Mise en avant des nouveautés  
+-  Responsive design  
+-  Upload d’images (admin)  
+
+---
+
+## Direction artistique
+
+- Couleurs : **noir / blanc / rouge**  
+- Style : moderne, immersif  
+- Inspiration : Netflix + univers manga  
+- UI : cartes + effets hover + animations légères  
+
+---
+
+## Technologies utilisées
+
+- HTML  
+- CSS  
+- JavaScript  
+- JSON  
+- PHP  
+
+---
+
+## 💡 Vision
+
+Créer une plateforme où l’utilisateur explore les mangas comme une bibliothèque interactive,  
+avec une expérience fluide, moderne et agréable.
