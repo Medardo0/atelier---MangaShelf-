@@ -1,61 +1,100 @@
 # atelier---MangaShelf-
 atelier-EFP
 
-Analyse concurentielle : 
+🔍 Analyse concurrentielle
+🌐 Site 1 — Kana Manga
 
-SITE 1 : https://www.kana.fr/mangas/ 
+🔗 https://www.kana.fr/mangas/
 
-Points Fort : 
-Des belles cartes, 
-  des Belles images et, 
-la topographie est incroyable j'adore
+✅ Points forts :
 
-Points Négatif : 
-Les couleurs sont pas ouf j'aime pas trop,  
-j'aime pas trop le header plusieur couleur, 
-et la section hero peut etre meilleur
+Cartes visuelles très propres (UI moderne)
+Images de haute qualité
+Typographie élégante et lisible
 
-SITE 2  : https://www.manga-news.com/index.php/series/
+❌ Points faibles :
 
-Points Fort : 
+Palette de couleurs peu marquante
+Header trop chargé (multi-couleurs)
+Section hero peu impactante
+🌐 Site 2 — Manga News
 
-header tres visible, 
-les couleurs sont bien choisis et,
-une bonne section hero 
+🔗 https://www.manga-news.com/index.php/series/
 
-Point Negatifs : 
+✅ Points forts :
 
-un defilie d'image on se perst tres vite, 
-le footer laisse a desirer, 
-la topographie pas ouf non plus et, 
-trop de pub 
+Header très visible et structuré
+Bonne hiérarchie des couleurs
+Section hero efficace
 
-SITE 3  : [https://www.manga-news.com/index.php/series/](https://www.mangacollec.com/)
+❌ Points faibles :
 
-Point Fort : 
-tres belle couleur, 
-beau menue laterale,
-des beaux effets 
+Slider trop rapide → perte de focus
+Footer peu travaillé
+Typographie basique
+Trop de publicités (UX dégradée)
+🌐 Site 3 — Manga News Series
 
+✅ Points forts :
 
-Point Négatif :
- tous est sur une seule page,
- les resumer sont vaste, 
- la typographie classique, 
- abcense du footer 
- aucun detaile sur les manga en home page que des image
+Belle palette de couleurs
+Menu latéral intéressant
+Effets visuels réussis
 
- //////////////////////////////////////////////////
- ////////////////////////////////////////////////
+❌ Points faibles :
 
- thème : Cataloque de Manga 
- type de site :  Divértisement et informatif
- public cible : Tous Type d'age, les fans de manga, et les personnes qui veulent découvrire se monde 
- objectifs : informer les users sur les dernier manga publier, mais aussi aider les gens qui s'intersser et veulent rentrer dans se monde 
- pages envisagées : admin, HomePage , acceuille , catalogue, nouveauté
- fonctionnalités principales : ct
- 
+Tout est sur une seule page (manque de structure)
+Résumés trop longs
+Typographie classique
+Absence de footer
+Page d’accueil peu informative (images sans contexte)
+🎯 Concept du site
 
+🧩 Thème : Catalogue de mangas
+🎭 Type : Divertissement & Informatif
+
+👥 Public cible :
+
+Fans de manga
+Débutants curieux
+Tous les âges
+
+🚀 Objectifs :
+
+Présenter les derniers mangas sortis
+Aider les nouveaux utilisateurs à découvrir cet univers
+Offrir une navigation fluide et agréable
+📄 Pages prévues
+🏠 Home (Accueil)
+📚 Catalogue
+🆕 Nouveautés
+🔐 Admin (gestion du contenu)
+⚙️ Fonctionnalités principales
+🔍 Recherche de mangas
+🧾 Fiches détaillées (résumé, image, genre…)
+🧠 Système de filtres (genre, popularité…)
+⭐ Mise en avant des nouveautés
+📱 Design responsive (mobile-first)
+🖼️ Upload d’images (admin)
+📨 Formulaire de contact
+🎨 Direction artistique (important pour ton prof 👀)
+Style : moderne, immersif, inspiré des plateformes de streaming
+Couleurs : noir, blanc, rouge (style manga premium)
+Typographie : originale et impactante (éviter les polices classiques)
+UI : cartes visuelles + hover effects + animations légères
+🧪 Stack technique
+HTML / CSS / JavaScript
+JSON (données mangas)
+PHP (back-end simple / admin)
+💡 Améliorations prévues
+Ajouter un système de favoris ❤️
+Notation des mangas ⭐
+Connexion utilisateur 🔐
+API manga (si possible plus tard)
+🧙‍♂️ Vision finale
+
+Un site qui donne envie de scroll comme sur Netflix, mais pour les mangas.
+Pas juste une liste… une expérience.
 
 
 
