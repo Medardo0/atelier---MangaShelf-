@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Titre du manga — MangaShelf</title>
+  <meta name="description" content="Fiche détaillée de Titre du manga : synopsis, auteur, genres, nombre de tomes et actions de collection.">
+</head>
+<body>
+
+  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+  <header role="banner">
+    <div class="header-inner">
+      <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
+        <strong>MangaShelf</strong>
+      </a>
+      <nav aria-label="Navigation principale">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="catalogue.html">Catalogue</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-auth">
+        <a href="connexion.html">Connexion</a>
+        <a href="inscription.html">Inscription</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu-principal">
+
+    <nav aria-label="Fil d'ariane">
+      <ol>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+        <li aria-current="page">Titre du manga</li>
+      </ol>
+    </nav>
+
+    <article aria-labelledby="manga-titre">
+
+      <div class="manga-detail-layout">
+
+        <div class="manga-media">
+          <img
+            src="uploads/couverture-manga.jpg"
+            alt="Couverture de Titre du manga — tome 1"
+            width="220"
+            height="320"
+          >
+
+          <section aria-labelledby="actions-titre">
+            <h2 id="actions-titre">Ajouter à ma collection</h2>
+            <p>Connectez-vous pour gérer votre collection.</p>
+            <form method="post" action="collection.php">
+              <input type="hidden" name="manga_id" value="1">
+              <input type="hidden" name="csrf_token" value="">
+              <button type="submit" name="action" value="favoris">
+                Ajouter aux favoris
+              </button>
+              <button type="submit" name="action" value="wishlist">
+                Ajouter à la wishlist
+              </button>
+              <button type="submit" name="action" value="lu">
+                Marquer comme lu
+              </button>
+            </form>
+          </section>
+        </div>
+
+        <div class="manga-info">
+
+          <h1 id="manga-titre">Titre complet du manga</h1>
+
+          <dl class="manga-meta">
+            <dt>Auteur</dt>
+            <dd>Nom Prénom</dd>
+
+            <dt>Nombre de tomes</dt>
+            <dd>24 tomes</dd>
+
+            <dt>Statut</dt>
+            <dd>En cours de publication</dd>
+
+            <dt>Genres</dt>
+            <dd>
+              <ul aria-label="Genres du manga">
+                <li><a href="catalogue.html?genre=shonen">Shonen</a></li>
+                <li><a href="catalogue.html?genre=action">Action</a></li>
+                <li><a href="catalogue.html?genre=aventure">Aventure</a></li>
+              </ul>
+            </dd>
+
+            <dt>Tags</dt>
+            <dd>
+              <ul aria-label="Tags associés">
+                <li><a href="catalogue.html?tag=combat">Combat</a></li>
+                <li><a href="catalogue.html?tag=amitie">Amitié</a></li>
+                <li><a href="catalogue.html?tag=pouvoirs">Pouvoirs</a></li>
+              </ul>
+            </dd>
+          </dl>
+
+          <section aria-labelledby="synopsis-titre">
+            <h2 id="synopsis-titre">Synopsis</h2>
+            <p>
+              Description complète du manga sur plusieurs paragraphes.
+              Présentation de l'histoire, des personnages principaux
+              et de l'univers de la série. Ce texte sera dynamique
+              et chargé depuis la base de données en PHP.
+            </p>
+            <p>
+              Suite du synopsis avec des détails supplémentaires
+              sur l'intrigue principale et les enjeux de la série.
+            </p>
+          </section>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <aside aria-labelledby="similaires-titre">
+      <h2 id="similaires-titre">Mangas similaires</h2>
+      <ul class="liste-mangas" aria-label="Mangas du même genre">
+
+        <li class="carte-manga">
+          <article>
+            <a href="manga.html?id=7">
+              <img src="uploads/couverture-7.jpg" alt="Couverture de Manga similaire 1" width="100" height="140">
+              <h3>Manga similaire 1</h3>
+            </a>
+            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=shonen">Shonen</a></p>
+          </article>
+        </li>
+
+        <li class="carte-manga">
+          <article>
+            <a href="manga.html?id=8">
+              <img src="uploads/couverture-8.jpg" alt="Couverture de Manga similaire 2" width="100" height="140">
+              <h3>Manga similaire 2</h3>
+            </a>
+            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=action">Action</a></p>
+          </article>
+        </li>
+
+        <li class="carte-manga">
+          <article>
+            <a href="manga.html?id=9">
+              <img src="uploads/couverture-9.jpg" alt="Couverture de Manga similaire 3" width="100" height="140">
+              <h3>Manga similaire 3</h3>
+            </a>
+            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=aventure">Aventure</a></p>
+          </article>
+        </li>
+
+      </ul>
+    </aside>
+
+  </main>
+
+  <footer role="contentinfo">
+    <nav aria-label="Navigation secondaire">
+      <ul>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </nav>
+    <p><small>MangaShelf &copy; 2025</small></p>
+  </footer>
+
+</body>
+</html>
