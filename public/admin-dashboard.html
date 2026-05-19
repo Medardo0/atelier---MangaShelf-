@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord — Administration MangaShelf</title>
+  <meta name="description" content="Tableau de bord d'administration MangaShelf.">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+  <header role="banner">
+    <div class="admin-header-inner">
+      <a href="../index.html" aria-label="MangaShelf — voir le site public">
+        <strong>MangaShelf</strong>
+      </a>
+      <span aria-hidden="true">—</span>
+      <span>Administration</span>
+      <nav aria-label="Actions de session">
+        <ul>
+          <li>
+            <form method="post" action="logout.php">
+              <input type="hidden" name="csrf_token" value="">
+              <button type="submit">Se déconnecter</button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+
+    <nav aria-label="Navigation administration">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="admin-dashboard.html" aria-current="page">Tableau de bord</a></li>
+        <li><a href="admin-mangas.html">Mangas</a></li>
+        <li><a href="admin-genres.html">Genres et tags</a></li>
+        <li>
+          <a href="admin-messages.html">
+            Messages
+            <span aria-label="3 messages non lus">(3)</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="contenu-principal">
+
+      <h1>Tableau de bord</h1>
+
+      <section aria-labelledby="stats-titre">
+        <h2 id="stats-titre">Vue d'ensemble</h2>
+        <ul aria-label="Indicateurs clés">
+          <li>
+            <strong>142</strong>
+            <span>Mangas publiés</span>
+          </li>
+          <li>
+            <strong>3</strong>
+            <span>Messages non lus</span>
+          </li>
+          <li>
+            <strong>18</strong>
+            <span>Genres et tags</span>
+          </li>
+          <li>
+            <strong>57</strong>
+            <span>Utilisateurs inscrits</span>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="actions-rapides-titre">
+        <h2 id="actions-rapides-titre">Actions rapides</h2>
+        <ul>
+          <li><a href="admin-manga-create.html">Ajouter un manga</a></li>
+          <li><a href="admin-messages.html">Consulter les messages</a></li>
+          <li><a href="admin-genres.html">Gérer les genres et tags</a></li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="recents-titre">
+        <h2 id="recents-titre">Derniers mangas ajoutés</h2>
+
+        <table>
+          <caption>Liste des mangas récemment ajoutés, triés par date décroissante</caption>
+          <thead>
+            <tr>
+              <th scope="col">Titre</th>
+              <th scope="col">Genre principal</th>
+              <th scope="col">Statut</th>
+              <th scope="col">Date d'ajout</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Titre manga A</td>
+              <td>Shonen</td>
+              <td>Publié</td>
+              <td><time datetime="2025-05-18">18 mai 2025</time></td>
+              <td>
+                <a href="admin-manga-edit.html?id=1">Modifier</a>
+                <form method="post" action="admin-manga-delete.php" style="display:inline">
+                  <input type="hidden" name="csrf_token" value="">
+                  <input type="hidden" name="manga_id" value="1">
+                  <button type="submit" aria-label="Supprimer Titre manga A">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>Titre manga B</td>
+              <td>Seinen</td>
+              <td>Brouillon</td>
+              <td><time datetime="2025-05-17">17 mai 2025</time></td>
+              <td>
+                <a href="admin-manga-edit.html?id=2">Modifier</a>
+                <form method="post" action="admin-manga-delete.php" style="display:inline">
+                  <input type="hidden" name="csrf_token" value="">
+                  <input type="hidden" name="manga_id" value="2">
+                  <button type="submit" aria-label="Supprimer Titre manga B">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>Titre manga C</td>
+              <td>Isekai</td>
+              <td>Publié</td>
+              <td><time datetime="2025-05-16">16 mai 2025</time></td>
+              <td>
+                <a href="admin-manga-edit.html?id=3">Modifier</a>
+                <form method="post" action="admin-manga-delete.php" style="display:inline">
+                  <input type="hidden" name="csrf_token" value="">
+                  <input type="hidden" name="manga_id" value="3">
+                  <button type="submit" aria-label="Supprimer Titre manga C">Supprimer</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><a href="admin-mangas.html">Voir tous les mangas</a></p>
+      </section>
+
+      <section aria-labelledby="messages-recents-titre">
+        <h2 id="messages-recents-titre">Messages récents non lus</h2>
+
+        <table>
+          <caption>Messages de contact non lus, les plus récents en premier</caption>
+          <thead>
+            <tr>
+              <th scope="col">Expéditeur</th>
+              <th scope="col">Sujet</th>
+              <th scope="col">Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jean Dupont</td>
+              <td>Question sur un manga</td>
+              <td><time datetime="2025-05-19">19 mai 2025</time></td>
+              <td><a href="admin-message.html?id=10">Lire</a></td>
+            </tr>
+            <tr>
+              <td>Marie Martin</td>
+              <td>Signalement d'erreur</td>
+              <td><time datetime="2025-05-18">18 mai 2025</time></td>
+              <td><a href="admin-message.html?id=11">Lire</a></td>
+            </tr>
+            <tr>
+              <td>Alex Bernard</td>
+              <td>Suggestion d'ajout</td>
+              <td><time datetime="2025-05-17">17 mai 2025</time></td>
+              <td><a href="admin-message.html?id=12">Lire</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><a href="admin-messages.html">Voir tous les messages</a></p>
+      </section>
+
+    </main>
+
+  </div>
+
+  <footer role="contentinfo">
+    <p><small>MangaShelf &copy; 2025 — Administration</small></p>
+  </footer>
+
+</body>
+</html>
