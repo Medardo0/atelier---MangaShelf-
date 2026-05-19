@@ -41,16 +41,33 @@ admin/
 └── messages.html       ← Gestion des messages
 ```
 
-## Points vérifiés
+## Architecture
 
-- Hiérarchie des titres cohérente (h1 unique par page)
-- Lien d'évitement sur toutes les pages
-- Balises sémantiques : header, nav, main, section, article, aside, footer, ol
-- Tous les label associés à leur champ (for/id)
-- Fieldset + legend sur tous les groupes de champs
-- Formulaires avec novalidate + csrf_token
-- Tables avec caption + scope sur les en-têtes
-- Fil d'ariane en ol sur les pages profondes
-- aria-current="page" sur le lien actif
-- role="alert" + aria-live sur les zones de messages dynamiques
-- meta robots noindex sur les pages admin
+Le projet suit une architecture MVC simple :
+
+- `public/` → Point d'entrée unique (index.php) + assets
+- `app/controllers/` → Contrôleurs (logique métier)
+- `app/models/` → Modèles (accès base de données via PDO)
+- `app/views/` → Vues (templates PHP)
+- `core/` → Router, classes mères Controller et Model
+- `config/` → Configuration et définition des routes
+
+Seul le dossier `public/` est exposé au navigateur.
+Toutes les requêtes sont redirigées vers `public/index.php`
+via la règle de réécriture Apache dans `public/.htaccess`.
+
+## Avancement
+
+## Avancement
+
+- [x] Session 1 — Cadrage et documentation
+- [x] Session 2 — Wireframes
+- [x] Session 3 — HTML sémantique (pages publiques)
+- [x] Session 4 — HTML administration
+- [x] Session 5 — Base HTML finalisée
+- [x] Session 6 — Architecture MVC et cartographie des URL
+- [ ] Session 7
+- [ ] Session 8
+- [ ] Session 9
+- [ ] Session 10
+- [ ] Session 11
