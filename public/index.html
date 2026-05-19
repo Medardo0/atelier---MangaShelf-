@@ -3,45 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MangaShelf — Accueil</title>
+  <title>MangaShelf — Catalogue de mangas en ligne</title>
   <meta name="description" content="MangaShelf est un catalogue en ligne de mangas. Découvrez, recherchez et gérez votre collection personnelle.">
 </head>
 <body>
 
-  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+  <a href="#contenu-principal" class="lien-evitement">Aller au contenu principal</a>
 
   <header role="banner">
-    <div class="header-inner">
-      <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
-        <strong>MangaShelf</strong>
-      </a>
-      <nav aria-label="Navigation principale">
-        <ul>
-          <li><a href="index.html" aria-current="page">Accueil</a></li>
-          <li><a href="catalogue.html">Catalogue</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="header-auth">
-        <a href="connexion.html">Connexion</a>
-        <a href="inscription.html">Inscription</a>
-      </div>
-    </div>
+    <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
+      <strong>MangaShelf</strong>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html" aria-current="page">Accueil</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Compte utilisateur">
+      <ul>
+        <li><a href="connexion.html">Connexion</a></li>
+        <li><a href="inscription.html">Inscription</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="contenu-principal">
 
     <section aria-labelledby="hero-titre">
       <h1 id="hero-titre">Découvrez et suivez vos mangas</h1>
-      <p>Parcourez un catalogue complet, consultez les fiches détaillées et créez votre collection personnelle.</p>
-
-      <form action="catalogue.html" method="get" role="search" aria-label="Recherche rapide de mangas">
-        <label for="recherche-hero">Rechercher un manga</label>
+      <p>
+        MangaShelf est un catalogue en ligne de mangas.
+        Parcourez les fiches, filtrez par genre, et créez votre collection personnelle.
+      </p>
+      <form action="catalogue.html" method="get" role="search" aria-label="Recherche rapide dans le catalogue">
+        <label for="recherche-accueil">Rechercher un manga</label>
         <input
           type="search"
-          id="recherche-hero"
+          id="recherche-accueil"
           name="q"
-          placeholder="Titre, auteur, genre..."
+          placeholder="Titre, auteur, genre…"
           autocomplete="off"
         >
         <button type="submit">Rechercher</button>
@@ -50,7 +52,7 @@
 
     <section aria-labelledby="genres-titre">
       <h2 id="genres-titre">Parcourir par genre</h2>
-      <ul aria-label="Genres disponibles">
+      <ul>
         <li><a href="catalogue.html?genre=shonen">Shonen</a></li>
         <li><a href="catalogue.html?genre=seinen">Seinen</a></li>
         <li><a href="catalogue.html?genre=shojo">Shojo</a></li>
@@ -64,61 +66,69 @@
 
     <section aria-labelledby="recents-titre">
       <h2 id="recents-titre">Mangas récemment ajoutés</h2>
-      <ul class="liste-mangas" aria-label="Mangas récents">
-
-        <li class="carte-manga">
-          <article>
+      <ul>
+        <li>
+          <article aria-labelledby="manga-1-titre">
             <a href="manga.html?id=1">
-              <img src="uploads/couverture-placeholder.jpg" alt="Couverture de Titre manga 1" width="140" height="200">
-              <h3>Titre manga 1</h3>
+              <img src="../uploads/couverture-1.jpg" alt="Couverture de Titre manga 1" width="140" height="200">
             </a>
-            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=shonen">Shonen</a></p>
-            <p><span class="label-sr">Auteur :</span> Nom Auteur</p>
+            <h3 id="manga-1-titre"><a href="manga.html?id=1">Titre manga 1</a></h3>
+            <dl>
+              <dt>Auteur</dt><dd>Nom Auteur</dd>
+              <dt>Genre</dt><dd><a href="catalogue.html?genre=shonen">Shonen</a></dd>
+            </dl>
           </article>
         </li>
-
-        <li class="carte-manga">
-          <article>
+        <li>
+          <article aria-labelledby="manga-2-titre">
             <a href="manga.html?id=2">
-              <img src="uploads/couverture-placeholder.jpg" alt="Couverture de Titre manga 2" width="140" height="200">
-              <h3>Titre manga 2</h3>
+              <img src="../uploads/couverture-2.jpg" alt="Couverture de Titre manga 2" width="140" height="200">
             </a>
-            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=seinen">Seinen</a></p>
-            <p><span class="label-sr">Auteur :</span> Nom Auteur</p>
+            <h3 id="manga-2-titre"><a href="manga.html?id=2">Titre manga 2</a></h3>
+            <dl>
+              <dt>Auteur</dt><dd>Nom Auteur</dd>
+              <dt>Genre</dt><dd><a href="catalogue.html?genre=seinen">Seinen</a></dd>
+            </dl>
           </article>
         </li>
-
-        <li class="carte-manga">
-          <article>
+        <li>
+          <article aria-labelledby="manga-3-titre">
             <a href="manga.html?id=3">
-              <img src="uploads/couverture-placeholder.jpg" alt="Couverture de Titre manga 3" width="140" height="200">
-              <h3>Titre manga 3</h3>
+              <img src="../uploads/couverture-3.jpg" alt="Couverture de Titre manga 3" width="140" height="200">
             </a>
-            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=isekai">Isekai</a></p>
-            <p><span class="label-sr">Auteur :</span> Nom Auteur</p>
+            <h3 id="manga-3-titre"><a href="manga.html?id=3">Titre manga 3</a></h3>
+            <dl>
+              <dt>Auteur</dt><dd>Nom Auteur</dd>
+              <dt>Genre</dt><dd><a href="catalogue.html?genre=isekai">Isekai</a></dd>
+            </dl>
           </article>
         </li>
-
-        <li class="carte-manga">
-          <article>
+        <li>
+          <article aria-labelledby="manga-4-titre">
             <a href="manga.html?id=4">
-              <img src="uploads/couverture-placeholder.jpg" alt="Couverture de Titre manga 4" width="140" height="200">
-              <h3>Titre manga 4</h3>
+              <img src="../uploads/couverture-4.jpg" alt="Couverture de Titre manga 4" width="140" height="200">
             </a>
-            <p><span class="label-sr">Genre :</span> <a href="catalogue.html?genre=action">Action</a></p>
-            <p><span class="label-sr">Auteur :</span> Nom Auteur</p>
+            <h3 id="manga-4-titre"><a href="manga.html?id=4">Titre manga 4</a></h3>
+            <dl>
+              <dt>Auteur</dt><dd>Nom Auteur</dd>
+              <dt>Genre</dt><dd><a href="catalogue.html?genre=action">Action</a></dd>
+            </dl>
           </article>
         </li>
-
       </ul>
       <p><a href="catalogue.html">Voir tout le catalogue</a></p>
     </section>
 
     <section aria-labelledby="cta-titre">
-      <h2 id="cta-titre">Créez votre collection personnelle</h2>
-      <p>Inscrivez-vous pour enregistrer vos mangas favoris, gérer votre wishlist et suivre vos lectures.</p>
-      <a href="inscription.html">Créer un compte</a>
-      <a href="connexion.html">Se connecter</a>
+      <h2 id="cta-titre">Gérez votre collection personnelle</h2>
+      <p>
+        Créez un compte gratuit pour enregistrer vos mangas favoris,
+        gérer votre wishlist et suivre vos lectures.
+      </p>
+      <ul>
+        <li><a href="inscription.html">Créer un compte</a></li>
+        <li><a href="connexion.html">Se connecter</a></li>
+      </ul>
     </section>
 
   </main>
@@ -130,7 +140,7 @@
         <li><a href="mentions-legales.html">Mentions légales</a></li>
       </ul>
     </nav>
-    <p><small>MangaShelf &copy; 2025</small></p>
+    <p><small>&copy; 2025 MangaShelf</small></p>
   </footer>
 
 </body>

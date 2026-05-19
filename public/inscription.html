@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription — MangaShelf</title>
+  <meta name="description" content="Créez votre compte MangaShelf pour gérer votre collection de mangas.">
+</head>
+<body>
+
+  <a href="#contenu-principal" class="lien-evitement">Aller au contenu principal</a>
+
+  <header role="banner">
+    <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
+      <strong>MangaShelf</strong>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenu-principal">
+
+    <h1>Créer un compte</h1>
+    <p>Rejoignez MangaShelf pour gérer votre collection, vos favoris et votre wishlist.</p>
+
+    <form method="post" action="../inscription.php" aria-label="Formulaire d'inscription" novalidate>
+
+      <input type="hidden" name="csrf_token" value="">
+
+      <div>
+        <label for="pseudo">
+          Pseudo
+          <abbr title="obligatoire">*</abbr>
+        </label>
+        <input
+          type="text"
+          id="pseudo"
+          name="username"
+          required
+          aria-required="true"
+          minlength="3"
+          maxlength="30"
+          autocomplete="username"
+          aria-describedby="pseudo-aide"
+          placeholder="Votre pseudo public"
+        >
+        <p id="pseudo-aide">Entre 3 et 30 caractères. Sera visible sur votre profil.</p>
+      </div>
+
+      <div>
+        <label for="email-inscription">
+          Adresse e-mail
+          <abbr title="obligatoire">*</abbr>
+        </label>
+        <input
+          type="email"
+          id="email-inscription"
+          name="email"
+          required
+          aria-required="true"
+          autocomplete="email"
+          placeholder="votre@email.com"
+        >
+      </div>
+
+      <div>
+        <label for="mdp-inscription">
+          Mot de passe
+          <abbr title="obligatoire">*</abbr>
+        </label>
+        <input
+          type="password"
+          id="mdp-inscription"
+          name="password"
+          required
+          aria-required="true"
+          minlength="8"
+          autocomplete="new-password"
+          aria-describedby="mdp-aide"
+        >
+        <p id="mdp-aide">Minimum 8 caractères.</p>
+      </div>
+
+      <div>
+        <label for="mdp-confirm">
+          Confirmer le mot de passe
+          <abbr title="obligatoire">*</abbr>
+        </label>
+        <input
+          type="password"
+          id="mdp-confirm"
+          name="password_confirm"
+          required
+          aria-required="true"
+          autocomplete="new-password"
+        >
+      </div>
+
+      <div role="alert" aria-live="polite" id="erreurs-inscription">
+        <!-- Messages d'erreur injectés ici -->
+      </div>
+
+      <button type="submit">Créer mon compte</button>
+
+    </form>
+
+    <p>Déjà inscrit ? <a href="connexion.html">Se connecter</a></p>
+
+  </main>
+
+  <footer role="contentinfo">
+    <nav aria-label="Navigation secondaire">
+      <ul>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </nav>
+    <p><small>&copy; 2025 MangaShelf</small></p>
+  </footer>
+
+</body>
+</html>

@@ -4,29 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catalogue — MangaShelf</title>
-  <meta name="description" content="Parcourez le catalogue complet de MangaShelf. Filtrez par genre, statut et auteur pour trouver votre prochain manga.">
+  <meta name="description" content="Parcourez le catalogue complet de MangaShelf. Filtrez par genre, statut et auteur.">
 </head>
 <body>
 
-  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+  <a href="#contenu-principal" class="lien-evitement">Aller au contenu principal</a>
 
   <header role="banner">
-    <div class="header-inner">
-      <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
-        <strong>MangaShelf</strong>
-      </a>
-      <nav aria-label="Navigation principale">
-        <ul>
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="catalogue.html" aria-current="page">Catalogue</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="header-auth">
-        <a href="connexion.html">Connexion</a>
-        <a href="inscription.html">Inscription</a>
-      </div>
-    </div>
+    <a href="index.html" aria-label="MangaShelf — retour à l'accueil">
+      <strong>MangaShelf</strong>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="catalogue.html" aria-current="page">Catalogue</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Compte utilisateur">
+      <ul>
+        <li><a href="connexion.html">Connexion</a></li>
+        <li><a href="inscription.html">Inscription</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="contenu-principal">
@@ -36,72 +36,41 @@
     <div class="catalogue-layout">
 
       <aside aria-labelledby="filtres-titre">
-        <h2 id="filtres-titre">Filtrer les résultats</h2>
+        <h2 id="filtres-titre">Filtres</h2>
 
-        <form method="get" action="catalogue.html" aria-label="Formulaire de filtrage du catalogue">
+        <form method="get" action="catalogue.html" aria-label="Filtrer et trier le catalogue">
 
           <fieldset>
             <legend>Recherche par mot-clé</legend>
-            <label for="recherche">Titre ou auteur</label>
+            <label for="q">Titre ou auteur</label>
             <input
               type="search"
-              id="recherche"
+              id="q"
               name="q"
-              placeholder="Titre, auteur..."
+              placeholder="Titre, auteur…"
               autocomplete="off"
-              value=""
             >
           </fieldset>
 
           <fieldset>
             <legend>Genre</legend>
             <ul>
-              <li>
-                <input type="checkbox" id="genre-shonen" name="genre[]" value="shonen">
-                <label for="genre-shonen">Shonen</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-seinen" name="genre[]" value="seinen">
-                <label for="genre-seinen">Seinen</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-shojo" name="genre[]" value="shojo">
-                <label for="genre-shojo">Shojo</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-isekai" name="genre[]" value="isekai">
-                <label for="genre-isekai">Isekai</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-action" name="genre[]" value="action">
-                <label for="genre-action">Action</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-romance" name="genre[]" value="romance">
-                <label for="genre-romance">Romance</label>
-              </li>
-              <li>
-                <input type="checkbox" id="genre-horreur" name="genre[]" value="horreur">
-                <label for="genre-horreur">Horreur</label>
-              </li>
+              <li><label><input type="checkbox" name="genre[]" value="shonen"> Shonen</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="seinen"> Seinen</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="shojo"> Shojo</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="isekai"> Isekai</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="action"> Action</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="romance"> Romance</label></li>
+              <li><label><input type="checkbox" name="genre[]" value="horreur"> Horreur</label></li>
             </ul>
           </fieldset>
 
           <fieldset>
             <legend>Statut de la série</legend>
             <ul>
-              <li>
-                <input type="radio" id="statut-tous" name="statut" value="" checked>
-                <label for="statut-tous">Tous</label>
-              </li>
-              <li>
-                <input type="radio" id="statut-en-cours" name="statut" value="en_cours">
-                <label for="statut-en-cours">En cours</label>
-              </li>
-              <li>
-                <input type="radio" id="statut-termine" name="statut" value="termine">
-                <label for="statut-termine">Terminé</label>
-              </li>
+              <li><label><input type="radio" name="statut" value="" checked> Tous</label></li>
+              <li><label><input type="radio" name="statut" value="en_cours"> En cours</label></li>
+              <li><label><input type="radio" name="statut" value="termine"> Terminé</label></li>
             </ul>
           </fieldset>
 
@@ -109,119 +78,122 @@
             <legend>Trier par</legend>
             <label for="tri">Ordre d'affichage</label>
             <select id="tri" name="tri">
-              <option value="date_desc" selected>Date d'ajout (plus récent)</option>
-              <option value="date_asc">Date d'ajout (plus ancien)</option>
+              <option value="date_desc" selected>Date d'ajout (récent)</option>
+              <option value="date_asc">Date d'ajout (ancien)</option>
               <option value="titre_asc">Titre A → Z</option>
               <option value="titre_desc">Titre Z → A</option>
             </select>
           </fieldset>
 
           <button type="submit">Appliquer les filtres</button>
-          <a href="catalogue.html">Réinitialiser</a>
+          <a href="catalogue.html">Réinitialiser les filtres</a>
 
         </form>
       </aside>
 
-      <section aria-labelledby="resultats-titre">
-        <h2 id="resultats-titre">Résultats <span aria-label="142 mangas trouvés">(142)</span></h2>
+      <section aria-labelledby="resultats-titre" aria-live="polite">
+        <h2 id="resultats-titre">
+          Résultats
+          <span aria-label="142 mangas trouvés">(142)</span>
+        </h2>
 
-        <ul class="liste-mangas" aria-label="Liste des mangas">
-
-          <li class="carte-manga">
-            <article>
+        <ul>
+          <li>
+            <article aria-labelledby="c-manga-1">
               <a href="manga.html?id=1">
-                <img src="uploads/couverture-1.jpg" alt="Couverture de Titre manga 1" width="140" height="200">
-                <h3>Titre manga 1</h3>
+                <img src="../uploads/couverture-1.jpg" alt="Couverture de Titre manga 1" width="140" height="200">
               </a>
+              <h3 id="c-manga-1"><a href="manga.html?id=1">Titre manga 1</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=shonen">Shonen</a></dd>
                 <dt>Tomes</dt><dd>24 (en cours)</dd>
               </dl>
-              <a href="manga.html?id=1">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=1">Voir la fiche complète</a>
             </article>
           </li>
-
-          <li class="carte-manga">
-            <article>
+          <li>
+            <article aria-labelledby="c-manga-2">
               <a href="manga.html?id=2">
-                <img src="uploads/couverture-2.jpg" alt="Couverture de Titre manga 2" width="140" height="200">
-                <h3>Titre manga 2</h3>
+                <img src="../uploads/couverture-2.jpg" alt="Couverture de Titre manga 2" width="140" height="200">
               </a>
+              <h3 id="c-manga-2"><a href="manga.html?id=2">Titre manga 2</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=seinen">Seinen</a></dd>
                 <dt>Tomes</dt><dd>12 (terminé)</dd>
               </dl>
-              <a href="manga.html?id=2">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=2">Voir la fiche complète</a>
             </article>
           </li>
-
-          <li class="carte-manga">
-            <article>
+          <li>
+            <article aria-labelledby="c-manga-3">
               <a href="manga.html?id=3">
-                <img src="uploads/couverture-3.jpg" alt="Couverture de Titre manga 3" width="140" height="200">
-                <h3>Titre manga 3</h3>
+                <img src="../uploads/couverture-3.jpg" alt="Couverture de Titre manga 3" width="140" height="200">
               </a>
+              <h3 id="c-manga-3"><a href="manga.html?id=3">Titre manga 3</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=isekai">Isekai</a></dd>
                 <dt>Tomes</dt><dd>8 (en cours)</dd>
               </dl>
-              <a href="manga.html?id=3">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=3">Voir la fiche complète</a>
             </article>
           </li>
-
-          <li class="carte-manga">
-            <article>
+          <li>
+            <article aria-labelledby="c-manga-4">
               <a href="manga.html?id=4">
-                <img src="uploads/couverture-4.jpg" alt="Couverture de Titre manga 4" width="140" height="200">
-                <h3>Titre manga 4</h3>
+                <img src="../uploads/couverture-4.jpg" alt="Couverture de Titre manga 4" width="140" height="200">
               </a>
+              <h3 id="c-manga-4"><a href="manga.html?id=4">Titre manga 4</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=action">Action</a></dd>
                 <dt>Tomes</dt><dd>36 (en cours)</dd>
               </dl>
-              <a href="manga.html?id=4">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=4">Voir la fiche complète</a>
             </article>
           </li>
-
-          <li class="carte-manga">
-            <article>
+          <li>
+            <article aria-labelledby="c-manga-5">
               <a href="manga.html?id=5">
-                <img src="uploads/couverture-5.jpg" alt="Couverture de Titre manga 5" width="140" height="200">
-                <h3>Titre manga 5</h3>
+                <img src="../uploads/couverture-5.jpg" alt="Couverture de Titre manga 5" width="140" height="200">
               </a>
+              <h3 id="c-manga-5"><a href="manga.html?id=5">Titre manga 5</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=romance">Romance</a></dd>
                 <dt>Tomes</dt><dd>6 (terminé)</dd>
               </dl>
-              <a href="manga.html?id=5">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=5">Voir la fiche complète</a>
             </article>
           </li>
-
-          <li class="carte-manga">
-            <article>
+          <li>
+            <article aria-labelledby="c-manga-6">
               <a href="manga.html?id=6">
-                <img src="uploads/couverture-6.jpg" alt="Couverture de Titre manga 6" width="140" height="200">
-                <h3>Titre manga 6</h3>
+                <img src="../uploads/couverture-6.jpg" alt="Couverture de Titre manga 6" width="140" height="200">
               </a>
+              <h3 id="c-manga-6"><a href="manga.html?id=6">Titre manga 6</a></h3>
               <dl>
                 <dt>Auteur</dt><dd>Nom Auteur</dd>
                 <dt>Genre</dt><dd><a href="catalogue.html?genre=shojo">Shojo</a></dd>
                 <dt>Tomes</dt><dd>15 (en cours)</dd>
               </dl>
-              <a href="manga.html?id=6">Voir la fiche</a>
+              <p>Courte description du manga affichée dans la carte du catalogue.</p>
+              <a href="manga.html?id=6">Voir la fiche complète</a>
             </article>
           </li>
-
         </ul>
 
-        <nav aria-label="Pagination">
+        <nav aria-label="Pagination du catalogue">
           <ul>
-            <li><span aria-current="true" aria-label="Page actuelle, page 1">1</span></li>
+            <li><a href="catalogue.html?page=1" aria-label="Page précédente" aria-disabled="true">Précédent</a></li>
+            <li><a href="catalogue.html?page=1" aria-current="page" aria-label="Page 1, page actuelle">1</a></li>
             <li><a href="catalogue.html?page=2" aria-label="Page 2">2</a></li>
             <li><a href="catalogue.html?page=3" aria-label="Page 3">3</a></li>
             <li><span aria-hidden="true">…</span></li>
@@ -243,7 +215,7 @@
         <li><a href="mentions-legales.html">Mentions légales</a></li>
       </ul>
     </nav>
-    <p><small>MangaShelf &copy; 2025</small></p>
+    <p><small>&copy; 2025 MangaShelf</small></p>
   </footer>
 
 </body>
