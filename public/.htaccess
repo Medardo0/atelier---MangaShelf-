@@ -1,0 +1,13 @@
+# public/.htaccess
+# Redirige toutes les requêtes vers index.php
+
+Options -Indexes
+RewriteEngine On
+RewriteBase /mangashelf/public/
+
+# Ne pas réécrire si le fichier/dossier existe (assets, uploads)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Tout le reste → index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

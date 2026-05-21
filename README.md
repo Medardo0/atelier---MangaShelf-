@@ -56,7 +56,48 @@ Seul le dossier `public/` est exposé au navigateur.
 Toutes les requêtes sont redirigées vers `public/index.php`
 via la règle de réécriture Apache dans `public/.htaccess`.
 
-## Avancement
+### Base de données
+
+- Schéma SQL complet importé dans phpMyAdmin (`mangashelf_schema.sql`)
+- 8 tables : `operator`, `item`, `item_tag`, `tag`, `message`, `collection`, `collection_item`, `search`
+- Données de test : 6 mangas, 13 genres/tags, 1 admin, 1 utilisateur, 3 messages
+
+### Authentification (`core/Auth.php`)
+
+- `session_start()` centralisé
+- `require_auth()` — protection des pages admin
+- `is_logged_in()` — vérifie si un utilisateur est connecté
+- `csrf_token()` / `verify_csrf()` — protection des formulaires POST
+- Expiration de session après inactivité
+
+### Base de données (`core/Database.php`)
+
+- Singleton PDO — une seule connexion partagée
+- Gestion des erreurs avec `error_log()`
+
+### Router MVC (`core/http.php`, `core/router.php`, `core/html.php`)
+
+- `http_in()` — lit `$_SERVER['REQUEST_URI']` et retourne des segments propres
+- `route()` — applique la convention `/entity/action/id`
+- `is_safe_segment()` — valide les segments avant construction des noms de fichiers
+- `run()` — charge le controller et appelle la fonction correspondante
+- `render()` — charge une vue, injecte les données, retourne le HTML
+- `render_in_layout()` — imbrique une vue dans un layout
+- `http_out()` — seul endroit qui fait `echo`
+
+### Controllers mis en place
+
+- `app/controllers/home.php` — page d'accueil
+- `app/controllers/catalogue.php` — liste des mangas
+- `app/controllers/manga.php` — fiche détail
+- `app/controllers/admin.php` — login, dashboard, logout
+
+### Bugs corrigés
+
+- `?>` dans un commentaire PHP causait une erreur de parsing
+- 404 sur l'URL de base — résolu avec `RewriteBase` dans `.htaccess`
+- Statut `on_hold` manquant dans l'ENUM de la table `item`
+- Mot de passe root MySQL réinitialisé après restauration du dossier `data`
 
 ## Avancement
 
@@ -66,8 +107,8 @@ via la règle de réécriture Apache dans `public/.htaccess`.
 - [x] Session 4 — HTML administration
 - [x] Session 5 — Base HTML finalisée
 - [x] Session 6 — Architecture MVC et cartographie des URL
-- [ ] Session 7
-- [ ] Session 8
-- [ ] Session 9
-- [ ] Session 10
-- [ ] Session 11
+- [x] Session 7 — Système de login (Auth, sessions, CSRF)
+- [x] Session 8 — Router MVC (http_in, route, run, render)
+- [ ] Session 9 — Modèles et connexion BDD
+- [ ] Session 10 — CSS
+- [ ] Session 11 — Tests et déploiement
