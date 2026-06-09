@@ -39,6 +39,17 @@
 
 </form>
 
+<?php
+// Construit l'URL d'une page en conservant les filtres actifs
+function pagination_url(array $filters, int $page): string
+{
+    $params = array_merge($filters, ['page' => $page]);
+    unset($params['page']); // retire page=1 pour les URLs propres
+    if ($page > 1) $params['page'] = $page;
+    return '/mangashelf/public/catalogue' . ($params ? '?' . http_build_query($params) : '');
+}
+?>
+
 <?php if (empty($mangas)): ?>
   <p>Aucun manga ne correspond à votre recherche.</p>
 <?php else: ?>
@@ -80,4 +91,28 @@
   </li>
   <?php endforeach; ?>
 </ul>
+<?php endif; ?>
+
+<?php if ($total_pages > 1): ?>
+<nav aria-label="Pagination">
+  <ul>
+    <?php if ($current_page > 1): ?>
+    <li><a href="<?= pagination_url($filters, $current_page - 1) ?>">← Précédent</a></li>
+    <?php endif; ?>
+
+    <?php for ($p = 1; $p <= $total_pages; $p++): ?>
+    <li>
+      <?php if ($p === $current_page): ?>
+      <span aria-current="page"><?= $p ?></span>
+      <?php else: ?>
+      <a href="<?= pagination_url($filters, $p) ?>"><?= $p ?></a>
+      <?php endif; ?>
+    </li>
+    <?php endfor; ?>
+
+    <?php if ($current_page < $total_pages): ?>
+    <li><a href="<?= pagination_url($filters, $current_page + 1) ?>">Suivant →</a></li>
+    <?php endif; ?>
+  </ul>
+</nav>
 <?php endif; ?>

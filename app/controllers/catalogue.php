@@ -22,11 +22,18 @@ function catalogue_index(?string $id = null): string
         $filters['sort'] = $_GET['sort'];
     }
 
+    $per_page    = 12;
+    $total       = manga_count($filters);
+    $total_pages = max(1, (int) ceil($total / $per_page));
+    $current_page = $filters['page'] ?? 1;
+
     return render_in_layout('catalogue/index', 'layouts/main', [
-        'page_title' => 'Catalogue — MangaShelf',
-        'mangas'     => manga_get_all($filters),
-        'total'      => manga_count($filters),
-        'genres'     => tag_get_genres(),
-        'filters'    => $filters,
+        'page_title'   => 'Catalogue — MangaShelf',
+        'mangas'       => manga_get_all($filters),
+        'total'        => $total,
+        'total_pages'  => $total_pages,
+        'current_page' => $current_page,
+        'genres'       => tag_get_genres(),
+        'filters'      => $filters,
     ]);
 }
