@@ -27,8 +27,18 @@ $page_title = $page_title ?? 'MangaShelf';
     </nav>
     <nav aria-label="Compte utilisateur">
       <ul>
-        <li><a href="/mangashelf/public/connexion">Connexion</a></li>
-        <li><a href="/mangashelf/public/inscription">Inscription</a></li>
+        <?php if (is_logged_in()): ?>
+        <li><strong><?= htmlspecialchars($_SESSION['username']) ?></strong></li>
+        <li>
+          <form method="post" action="/mangashelf/public/auth/logout">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
+            <button type="submit">Déconnexion</button>
+          </form>
+        </li>
+        <?php else: ?>
+        <li><a href="/mangashelf/public/auth/connexion">Connexion</a></li>
+        <li><a href="/mangashelf/public/auth/inscription">Inscription</a></li>
+        <?php endif; ?>
       </ul>
     </nav>
   </header>
