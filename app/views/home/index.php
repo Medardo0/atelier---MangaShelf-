@@ -3,26 +3,43 @@
   <p>Parcourez le catalogue, consultez les fiches, créez votre collection.</p>
   <form action="/mangashelf/public/catalogue" method="get" role="search">
     <label for="q">Rechercher un manga</label>
-    <input type="search" id="q" name="q" placeholder="Titre, auteur, genre…">
+    <input type="search" id="q" name="q" placeholder="Titre, auteur…">
     <button type="submit">Rechercher</button>
   </form>
 </section>
+
 <section aria-labelledby="genres-titre">
   <h2 id="genres-titre">Parcourir par genre</h2>
   <ul>
     <?php foreach ($genres as $genre): ?>
-    <li><a href="/mangashelf/public/catalogue?genre=<?= urlencode(strtolower($genre)) ?>"><?= htmlspecialchars($genre) ?></a></li>
+    <li>
+      <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$genre['name']]]) ?>">
+        <?= htmlspecialchars($genre['name']) ?>
+      </a>
+    </li>
     <?php endforeach; ?>
   </ul>
 </section>
+
 <section aria-labelledby="recents-titre">
   <h2 id="recents-titre">Mangas récemment ajoutés</h2>
   <ul>
     <?php foreach ($recent_mangas as $manga): ?>
     <li>
       <article>
-        <h3><a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>"><?= htmlspecialchars($manga['title']) ?></a></h3>
-        <p>Genre : <a href="/mangashelf/public/catalogue?genre=<?= urlencode(strtolower($manga['genre'])) ?>"><?= htmlspecialchars($manga['genre']) ?></a></p>
+        <h3>
+          <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+            <?= htmlspecialchars($manga['title']) ?>
+          </a>
+        </h3>
+        <?php if (!empty($manga['genre'])): ?>
+        <p>
+          Genre :
+          <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
+            <?= htmlspecialchars($manga['genre']) ?>
+          </a>
+        </p>
+        <?php endif; ?>
       </article>
     </li>
     <?php endforeach; ?>

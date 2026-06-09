@@ -41,3 +41,5 @@ function require_auth(string $role = ''): void
         exit('Accès refusé.');
     }
 }
+
+
