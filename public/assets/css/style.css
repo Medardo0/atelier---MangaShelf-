@@ -142,6 +142,71 @@ body > header[role="banner"] nav form button:hover {
   background: rgba(230,48,48,.08);
 }
 
+/* ── Barre de recherche header ──────────────────────────── */
+.header-search {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  overflow: hidden;
+  transition: border-color .2s, background .2s;
+  flex-shrink: 0;
+}
+.header-search:focus-within {
+  border-color: var(--red);
+  background: rgba(255,255,255,.1);
+}
+.header-search input[type="search"] {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--white);
+  font-size: .88rem;
+  padding: .45rem 1rem;
+  width: 200px;
+  box-shadow: none;
+  transition: width .3s var(--ease);
+}
+.header-search input[type="search"]::placeholder { color: rgba(255,255,255,.35); }
+.header-search input[type="search"]:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  width: 260px;
+}
+/* Reset du style général pour le bouton de recherche header */
+.header-search button[type="submit"],
+.header-search button[type="submit"]:not(.btn) {
+  background: transparent !important;
+  border: none !important;
+  border-left: 1px solid rgba(255,255,255,.1) !important;
+  color: rgba(255,255,255,.5) !important;
+  padding: .45rem .85rem !important;
+  cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  transition: color .2s;
+  font-size: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  transform: none !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  line-height: 1 !important;
+}
+.header-search button[type="submit"]:hover,
+.header-search button[type="submit"]:not(.btn):hover {
+  color: var(--red) !important;
+  background: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 900px) {
+  .header-search { display: none; }
+}
+
 /* Main*/
 main#main-content {
   flex: 1;
@@ -224,7 +289,7 @@ body > footer[role="contentinfo"] {
   background: var(--grey-50);
 }
 
-/* Submit par défaut */
+/* Submit par défaut — exclu des zones spéciales via reset plus bas */
 button[type="submit"]:not(.btn) {
   display: inline-flex;
   padding: .6rem 1.4rem;
@@ -347,20 +412,51 @@ nav[aria-label="Fil d'ariane"] a:hover { color: var(--red); }
    ACCUEIL
 ════════════════════════════════════════════════════════ */
 
-/* Hero — bande diagonale */
-.home-hero {
+/* ════════════════════════════════════════════════════════
+   HERO SLIDER
+════════════════════════════════════════════════════════ */
+.hero-slider {
   position: relative;
-  background: var(--black);
   overflow: hidden;
   margin: -2.5rem -1.5rem 3rem;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
+  background: var(--black);
+  min-height: 440px;
 }
 
-/* Slash diagonal rouge */
-.home-hero::before {
-  content: '';
+/* Track — simple conteneur, pas de flex sur les slides */
+.hero-slides {
+  position: relative;
+  min-height: 440px;
+}
+
+/* Chaque slide — empilées en absolu */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  background: var(--black);
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity .55s ease, transform .55s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 2;
+}
+.hero-slide.exit {
+  opacity: 0;
+  transform: translateX(-60px);
+  z-index: 1;
+}
+
+/* Diagonal rouge sur chaque slide */
+.hero-slide-diagonal {
   position: absolute;
   top: -10%;
   right: -8%;
@@ -368,84 +464,187 @@ nav[aria-label="Fil d'ariane"] a:hover { color: var(--red); }
   height: 130%;
   background: var(--red);
   transform: skewX(-12deg);
-  opacity: .92;
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
 }
-/* Halo sombre sur la gauche pour lisibilité */
-.home-hero::after {
+/* Dégradé gauche pour la lisibilité du texte */
+.hero-slide::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(to right,
     rgba(13,13,13,1)   0%,
-    rgba(13,13,13,.6)  45%,
-    transparent        65%);
-  pointer-events: none;
+    rgba(13,13,13,.65) 42%,
+    transparent        62%);
   z-index: 1;
+  pointer-events: none;
 }
 
-.home-hero-content {
+/* Contenu texte */
+.hero-slide-content {
   position: relative;
   z-index: 2;
   padding: 4rem 2.5rem;
-  max-width: 620px;
-  animation: fadeUp .6s var(--ease) both;
+  max-width: 600px;
+  animation: fadeUp .5s var(--ease) both;
 }
 
-/* Filet rouge avant le titre */
-.home-hero-content::before {
-  content: '';
-  display: block;
-  width: 48px;
-  height: 4px;
-  background: var(--red);
-  border-radius: 2px;
-  margin-bottom: 1.25rem;
+/* Accroche au dessus du titre */
+.hero-eyebrow {
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--red);
+  background: rgba(230,48,48,.12);
+  border: 1px solid rgba(230,48,48,.3);
+  padding: .3rem .75rem;
+  border-radius: 999px;
+  margin-bottom: 1.1rem;
 }
 
-.home-hero h1 {
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
+.hero-slide-content h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 800;
   color: var(--white);
   letter-spacing: -2.5px;
   line-height: 1.05;
   margin-bottom: .9rem;
 }
-.home-hero h1 em {
-  font-style: normal;
-  color: var(--red);
-}
-.home-hero p {
+.hero-slide-content p {
   color: rgba(255,255,255,.5);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   margin-bottom: 2rem;
   max-width: 380px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
-.home-hero .hero-cta {
+
+.hero-actions {
+  display: flex;
+  gap: .85rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* CTA principal — blanc sur noir */
+.hero-cta {
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
+  gap: .5rem;
   background: var(--white);
   color: var(--black);
-  padding: .85rem 2rem;
+  padding: .8rem 1.85rem;
   border-radius: var(--radius);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: .97rem;
   text-decoration: none;
-  box-shadow: 0 8px 28px rgba(0,0,0,.4);
-  transition: all .25s var(--ease);
-  letter-spacing: -.2px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.35);
+  transition: all .22s var(--ease);
+  letter-spacing: -.1px;
+  border: 2px solid transparent;
 }
-.home-hero .hero-cta:hover {
+.hero-cta::after { content: ' →'; }
+.hero-cta:hover {
   background: var(--red);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(230,48,48,.5);
-  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(230,48,48,.45);
 }
-.home-hero .hero-cta::after { content: '→'; }
+
+/* CTA secondaire — outline blanc */
+.hero-cta--outline {
+  background: transparent;
+  color: rgba(255,255,255,.75);
+  border-color: rgba(255,255,255,.25);
+  box-shadow: none;
+}
+.hero-cta--outline::after { content: ''; }
+.hero-cta--outline:hover {
+  background: rgba(255,255,255,.08);
+  color: var(--white);
+  border-color: rgba(255,255,255,.5);
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+/* ── Couverture manga dans le slide ───────────────────── */
+.hero-slide-cover {
+  position: absolute;
+  right: 14%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-4deg) translateX(40px);
+  z-index: 3;
+  width: 190px;
+  opacity: 0;
+  transition: opacity .6s ease .1s, transform .6s ease .1s;
+  filter: drop-shadow(-20px 24px 40px rgba(0,0,0,.6));
+}
+.hero-slide.active .hero-slide-cover {
+  opacity: 1;
+  transform: translateY(-50%) rotate(-4deg) translateX(0);
+}
+.hero-slide-cover img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+/* ── Flèches prev/next ─────────────────────────────────── */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-prev { left: 1.25rem; }
+.hero-next { right: 1.25rem; }
+.hero-arrow:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateY(-50%) scale(1.08);
+}
+
+/* ── Indicateurs (dots) ────────────────────────────────── */
+.hero-dots {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: .5rem;
+  z-index: 10;
+}
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.3);
+  border: none;
+  cursor: pointer;
+  transition: background .25s, width .3s var(--ease);
+  padding: 0;
+}
+.hero-dot.active {
+  background: var(--red);
+  width: 26px;
+}
 
 /* Genre pills */
 .genre-list {

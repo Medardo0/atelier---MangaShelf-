@@ -25,6 +25,17 @@ $page_title = $page_title ?? 'MangaShelf';
         <li><a href="/mangashelf/public/contact">Contact</a></li>
       </ul>
     </nav>
+    <form class="header-search" action="/mangashelf/public/catalogue" method="get" role="search">
+      <input type="search" name="q" placeholder="Rechercher un manga…"
+             aria-label="Rechercher un manga"
+             value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
+      <button type="submit" aria-label="Lancer la recherche">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </form>
     <nav aria-label="Compte utilisateur">
       <ul>
         <?php if (is_logged_in()): ?>
