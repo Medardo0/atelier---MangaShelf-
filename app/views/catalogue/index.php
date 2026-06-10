@@ -57,6 +57,13 @@ function pagination_url(array $filters, int $page): string
   <?php foreach ($mangas as $manga): ?>
   <li>
     <article>
+      <?php if (!empty($manga['main_image'])): ?>
+      <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+        <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
+             alt="<?= htmlspecialchars($manga['title']) ?>"
+             style="max-width:120px">
+      </a>
+      <?php endif; ?>
       <h2>
         <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
           <?= htmlspecialchars($manga['title']) ?>

@@ -12,6 +12,8 @@ $selected_ids    = $is_edit
     ? array_map('intval', $manga['tag_ids'] ?? [])
     : array_map('intval', (array) ($old['tags'] ?? []));
 
+$cover_val    = $is_edit ? ($manga['main_image'] ?? null) : null;
+
 $form_action = $is_edit
     ? '/mangashelf/public/admin/manga_edit/' . (int) $manga['id']
     : '/mangashelf/public/admin/manga_create';
@@ -29,7 +31,7 @@ $form_action = $is_edit
 </div>
 <?php endif; ?>
 
-<form method="post" action="<?= $form_action ?>">
+<form method="post" action="<?= $form_action ?>" enctype="multipart/form-data">
   <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
 
   <div>
@@ -100,6 +102,17 @@ $form_action = $is_edit
   </fieldset>
   <?php endif; ?>
   <?php endif; ?>
+
+  <div>
+    <label for="cover">Image de couverture</label>
+    <?php if (!empty($cover_val)): ?>
+    <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($cover_val) ?>"
+         alt="Couverture actuelle" style="max-height:150px;display:block;margin-bottom:8px">
+    <p>Choisir une nouvelle image remplacera celle-ci.</p>
+    <?php endif; ?>
+    <input type="file" id="cover" name="cover" accept="image/jpeg,image/png,image/webp">
+    <p>JPG, PNG ou WebP — 2 Mo max.</p>
+  </div>
 
   <div>
     <label for="status">Visibilité</label>

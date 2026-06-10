@@ -6,6 +6,11 @@
   </ol>
 </nav>
 <article>
+  <?php if (!empty($manga['main_image'])): ?>
+  <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
+       alt="Couverture de <?= htmlspecialchars($manga['title']) ?>"
+       style="max-width:200px;float:right;margin:0 0 1rem 1rem">
+  <?php endif; ?>
   <h1><?= htmlspecialchars($manga['title']) ?></h1>
   <dl>
     <dt>Auteur</dt><dd><?= htmlspecialchars($manga['author']) ?></dd>

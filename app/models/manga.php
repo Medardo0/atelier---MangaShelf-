@@ -4,7 +4,7 @@ function manga_get_all(array $filters = []): array
     $params = [];
 
     $sql = "SELECT i.id, i.title, i.slug, i.author, i.volumes,
-                   i.series_status AS status, i.short_description,
+                   i.series_status AS status, i.short_description, i.main_image,
                    (SELECT t.name FROM item_tag it JOIN tag t ON t.id = it.tag_id
                     WHERE it.item_id = i.id AND t.type = 'genre'
                     ORDER BY t.name LIMIT 1) AS genre
@@ -194,7 +194,7 @@ function manga_get_by_id(int $id): ?array
 {
     $stmt = db()->prepare(
         "SELECT id, title, slug, author, volumes, series_status,
-                content, short_description, status
+                content, short_description, main_image, status
          FROM item WHERE id = :id"
     );
     $stmt->execute([':id' => $id]);
@@ -238,8 +238,8 @@ function manga_create(array $data, array $tag_ids): int
     if ($count > 0) $slug .= '-' . ($count + 1);
 
     $stmt = db()->prepare(
-        "INSERT INTO item (title, slug, author, volumes, series_status, content, short_description, status)
-         VALUES (:title, :slug, :author, :volumes, :series_status, :content, :short_description, :status)"
+        "INSERT INTO item (title, slug, author, volumes, series_status, content, short_description, main_image, status)
+         VALUES (:title, :slug, :author, :volumes, :series_status, :content, :short_description, :main_image, :status)"
     );
     $stmt->execute([
         ':title'             => $data['title'],
@@ -249,6 +249,7 @@ function manga_create(array $data, array $tag_ids): int
         ':series_status'     => $data['series_status'],
         ':content'           => $data['content'] ?? '',
         ':short_description' => $data['short_description'] ?? '',
+        ':main_image'        => $data['main_image'] ?? null,
         ':status'            => $data['status'] ?? 'published',
     ]);
     $id = (int) db()->lastInsertId();
@@ -258,14 +259,17 @@ function manga_create(array $data, array $tag_ids): int
 
 function manga_update(int $id, array $data, array $tag_ids): void
 {
+    $image_sql = array_key_exists('main_image', $data) ? ', main_image=:main_image' : '';
+
     $stmt = db()->prepare(
         "UPDATE item
          SET title=:title, author=:author, volumes=:volumes,
              series_status=:series_status, content=:content,
              short_description=:short_description, status=:status
+             $image_sql
          WHERE id=:id"
     );
-    $stmt->execute([
+    $params = [
         ':title'             => $data['title'],
         ':author'            => $data['author'],
         ':volumes'           => (int) ($data['volumes'] ?? 0),
@@ -274,7 +278,11 @@ function manga_update(int $id, array $data, array $tag_ids): void
         ':short_description' => $data['short_description'] ?? '',
         ':status'            => $data['status'] ?? 'published',
         ':id'                => $id,
-    ]);
+    ];
+    if (array_key_exists('main_image', $data)) {
+        $params[':main_image'] = $data['main_image'];
+    }
+    $stmt->execute($params);
     manga_sync_tags($id, $tag_ids);
 }
 

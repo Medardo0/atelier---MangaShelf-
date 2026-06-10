@@ -14,6 +14,27 @@
 require_once __DIR__ . '/../../core/Auth.php';
 require_once __DIR__ . '/../models/manga.php';
 require_once __DIR__ . '/../models/tag.php';
+require_once __DIR__ . '/../models/message.php';
+
+function upload_cover(string $slug): ?string
+{
+    if (empty($_FILES['cover']['name']) || $_FILES['cover']['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    $file = $_FILES['cover'];
+    if ($file['error'] !== UPLOAD_ERR_OK) return null;
+
+    $finfo   = new finfo(FILEINFO_MIME_TYPE);
+    $mime    = $finfo->file($file['tmp_name']);
+    $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+    if (!isset($allowed[$mime])) return null;
+    if ($file['size'] > 2 * 1024 * 1024) return null;
+
+    $filename = $slug . '-' . bin2hex(random_bytes(4)) . '.' . $allowed[$mime];
+    $dest     = __DIR__ . '/../../public/assets/uploads/' . $filename;
+
+    return move_uploaded_file($file['tmp_name'], $dest) ? $filename : null;
+}
 
 function admin_index(?string $id = null): string
 {
@@ -122,6 +143,8 @@ function admin_manga_create(?string $id = null): string
 
         if (empty($errors)) {
             $tag_ids = array_map('intval', (array) ($_POST['tags'] ?? []));
+            $slug    = manga_make_slug($title);
+            $cover   = upload_cover($slug);
             manga_create([
                 'title'             => $title,
                 'author'            => $author,
@@ -131,6 +154,7 @@ function admin_manga_create(?string $id = null): string
                 'content'           => trim($_POST['content'] ?? ''),
                 'short_description' => trim($_POST['short_description'] ?? ''),
                 'status'            => ($_POST['status'] ?? '') === 'draft' ? 'draft' : 'published',
+                'main_image'        => $cover,
             ], $tag_ids);
 
             header('Location: /mangashelf/public/admin/mangas');
@@ -173,8 +197,8 @@ function admin_manga_edit(?string $id = null): string
         if ($author === '') $errors[] = "L'auteur est obligatoire.";
 
         if (empty($errors)) {
-            $tag_ids = array_map('intval', (array) ($_POST['tags'] ?? []));
-            manga_update((int) $id, [
+            $tag_ids  = array_map('intval', (array) ($_POST['tags'] ?? []));
+            $new_data = [
                 'title'             => $title,
                 'author'            => $author,
                 'volumes'           => (int) ($_POST['volumes'] ?? 0),
@@ -183,7 +207,16 @@ function admin_manga_edit(?string $id = null): string
                 'content'           => trim($_POST['content'] ?? ''),
                 'short_description' => trim($_POST['short_description'] ?? ''),
                 'status'            => ($_POST['status'] ?? '') === 'draft' ? 'draft' : 'published',
-            ], $tag_ids);
+            ];
+            $cover = upload_cover($manga['slug']);
+            if ($cover !== null) {
+                // Supprimer l'ancienne image si elle existait
+                if (!empty($manga['main_image'])) {
+                    @unlink(__DIR__ . '/../../public/assets/uploads/' . $manga['main_image']);
+                }
+                $new_data['main_image'] = $cover;
+            }
+            manga_update((int) $id, $new_data, $tag_ids);
 
             header('Location: /mangashelf/public/admin/mangas');
             exit;
@@ -231,7 +264,90 @@ function admin_genres(?string $id = null): string
     return render_in_layout('admin/genres/index', 'layouts/admin', [
         'page_title' => 'Genres & Tags — Admin',
         'active_nav' => 'genres',
+        'tags'       => tag_get_all(),
     ]);
+}
+
+function admin_genre_create(?string $id = null): string
+{
+    require_auth('admin');
+
+    $errors = [];
+    $old    = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        verify_csrf();
+
+        $old  = $_POST;
+        $name = trim($_POST['name'] ?? '');
+        $type = in_array($_POST['type'] ?? '', ['genre', 'tag'], true) ? $_POST['type'] : 'tag';
+
+        if ($name === '') $errors[] = 'Le nom est obligatoire.';
+
+        if (empty($errors)) {
+            tag_create($name, $type);
+            header('Location: /mangashelf/public/admin/genres');
+            exit;
+        }
+    }
+
+    return render_in_layout('admin/genres/form', 'layouts/admin', [
+        'page_title' => 'Ajouter un genre/tag — Admin',
+        'active_nav' => 'genres',
+        'errors'     => $errors,
+        'old'        => $old,
+        'tag'        => null,
+    ]);
+}
+
+function admin_genre_edit(?string $id = null): string
+{
+    require_auth('admin');
+
+    if (empty($id)) return error_page(400, 'Identifiant manquant.');
+
+    $tag = tag_get_by_id((int) $id);
+    if ($tag === null) return error_page(404, 'Genre/tag introuvable.');
+
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        verify_csrf();
+
+        $name = trim($_POST['name'] ?? '');
+        $type = in_array($_POST['type'] ?? '', ['genre', 'tag'], true) ? $_POST['type'] : $tag['type'];
+
+        if ($name === '') $errors[] = 'Le nom est obligatoire.';
+
+        if (empty($errors)) {
+            tag_update((int) $id, $name, $type);
+            header('Location: /mangashelf/public/admin/genres');
+            exit;
+        }
+
+        $tag = array_merge($tag, ['name' => $name, 'type' => $type]);
+    }
+
+    return render_in_layout('admin/genres/form', 'layouts/admin', [
+        'page_title' => 'Modifier ' . $tag['name'] . ' — Admin',
+        'active_nav' => 'genres',
+        'errors'     => $errors,
+        'old'        => [],
+        'tag'        => $tag,
+    ]);
+}
+
+function admin_genre_delete(?string $id = null): string
+{
+    require_auth('admin');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id)) {
+        verify_csrf();
+        tag_delete((int) $id);
+    }
+
+    header('Location: /mangashelf/public/admin/genres');
+    exit;
 }
 
 function admin_messages(?string $id = null): string
@@ -240,7 +356,41 @@ function admin_messages(?string $id = null): string
     return render_in_layout('admin/messages/index', 'layouts/admin', [
         'page_title' => 'Messages — Admin',
         'active_nav' => 'messages',
+        'messages'   => message_get_all(),
+        'stats'      => ['messages_unread' => message_count_unread()],
     ]);
+}
+
+function admin_message_show(?string $id = null): string
+{
+    require_auth('admin');
+
+    if (empty($id)) return error_page(400, 'Identifiant manquant.');
+
+    $message = message_get_by_id((int) $id);
+    if ($message === null) return error_page(404, 'Message introuvable.');
+
+    message_mark_read((int) $id);
+
+    return render_in_layout('admin/messages/show', 'layouts/admin', [
+        'page_title' => $message['subject'] . ' — Admin',
+        'active_nav' => 'messages',
+        'message'    => $message,
+        'stats'      => ['messages_unread' => message_count_unread()],
+    ]);
+}
+
+function admin_message_delete(?string $id = null): string
+{
+    require_auth('admin');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id)) {
+        verify_csrf();
+        message_delete((int) $id);
+    }
+
+    header('Location: /mangashelf/public/admin/messages');
+    exit;
 }
 
 function admin_logout(?string $id = null): string
