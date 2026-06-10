@@ -1,8 +1,9 @@
+<div class="contact-page">
 <h1>Contact</h1>
 
 <?php if ($sent): ?>
-<div role="alert">
-  <p>Votre message a bien ete envoye. Nous vous repondrons dans les plus brefs delais.</p>
+<div class="contact-success">
+  <p>Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.</p>
 </div>
 <?php else: ?>
 
@@ -48,3 +49,4 @@
 </form>
 
 <?php endif; ?>
+</div>

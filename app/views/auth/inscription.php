@@ -1,3 +1,4 @@
+<div class="auth-page">
 <h1>Créer un compte</h1>
 <p>Rejoignez MangaShelf pour gérer votre collection, vos favoris et votre wishlist.</p>
 
@@ -47,3 +48,4 @@
 </form>
 
 <p>Déjà inscrit ? <a href="/mangashelf/public/auth/connexion">Se connecter</a></p>
+</div>

@@ -1,3 +1,4 @@
+<div class="auth-page">
 <h1>Connexion</h1>
 <p>Accédez à votre collection personnelle de mangas.</p>
 
@@ -30,3 +31,4 @@
 </form>
 
 <p>Pas encore de compte ? <a href="/mangashelf/public/auth/inscription">Créer un compte gratuitement</a></p>
+</div>

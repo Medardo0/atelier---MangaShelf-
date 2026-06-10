@@ -10,6 +10,7 @@ $redirect_back = '/mangashelf/public/collection';
 
 <h1>Mes collections</h1>
 
+<div class="collections-page">
 <?php foreach ($collections as $col): ?>
 <section>
   <h2>
@@ -41,3 +42,4 @@ $redirect_back = '/mangashelf/public/collection';
   <?php endif; ?>
 </section>
 <?php endforeach; ?>
+</div>

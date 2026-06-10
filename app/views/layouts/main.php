@@ -17,7 +17,7 @@ $page_title = $page_title ?? 'MangaShelf';
 <body>
   <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <header role="banner">
-    <a href="/mangashelf/public/"><strong>MangaShelf</strong></a>
+    <a href="/mangashelf/public/">Manga<strong>Shelf</strong></a>
     <nav aria-label="Navigation principale">
       <ul>
         <li><a href="/mangashelf/public/">Accueil</a></li>

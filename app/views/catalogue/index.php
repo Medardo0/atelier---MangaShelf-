@@ -1,6 +1,6 @@
 <h1>Catalogue de mangas <span>(<?= $total ?>)</span></h1>
 
-<form action="/mangashelf/public/catalogue" method="get">
+<form action="/mangashelf/public/catalogue" method="get" class="catalogue-filters">
 
   <div>
     <label for="q">Recherche</label>
@@ -31,20 +31,22 @@
     </select>
   </div>
 
-  <button type="submit">Filtrer</button>
-
-  <?php if (!empty(array_filter($filters))): ?>
-  <a href="/mangashelf/public/catalogue">Réinitialiser les filtres</a>
-  <?php endif; ?>
+  <div>
+    <button type="submit">Filtrer</button>
+    <?php if (!empty(array_filter($filters))): ?>
+    <a href="/mangashelf/public/catalogue" style="margin-left:.75rem;font-size:.85rem;color:var(--grey-600);">
+      Réinitialiser
+    </a>
+    <?php endif; ?>
+  </div>
 
 </form>
 
 <?php
-// Construit l'URL d'une page en conservant les filtres actifs
 function pagination_url(array $filters, int $page): string
 {
     $params = array_merge($filters, ['page' => $page]);
-    unset($params['page']); // retire page=1 pour les URLs propres
+    unset($params['page']);
     if ($page > 1) $params['page'] = $page;
     return '/mangashelf/public/catalogue' . ($params ? '?' . http_build_query($params) : '');
 }
@@ -53,47 +55,47 @@ function pagination_url(array $filters, int $page): string
 <?php if (empty($mangas)): ?>
   <p>Aucun manga ne correspond à votre recherche.</p>
 <?php else: ?>
-<ul>
+<ul class="manga-grid">
   <?php foreach ($mangas as $manga): ?>
   <li>
-    <article>
-      <?php if (!empty($manga['main_image'])): ?>
-      <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+    <article class="manga-card">
+      <div class="manga-card-img">
+        <?php if (!empty($manga['main_image'])): ?>
         <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
-             alt="<?= htmlspecialchars($manga['title']) ?>"
-             style="max-width:120px">
-      </a>
-      <?php endif; ?>
-      <h2>
-        <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
-          <?= htmlspecialchars($manga['title']) ?>
-        </a>
-      </h2>
-      <dl>
-        <dt>Auteur</dt>
-        <dd><?= htmlspecialchars($manga['author']) ?></dd>
-
-        <?php if (!empty($manga['genre'])): ?>
-        <dt>Genre</dt>
-        <dd>
-          <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
-            <?= htmlspecialchars($manga['genre']) ?>
-          </a>
-        </dd>
+             alt="<?= htmlspecialchars($manga['title']) ?>">
+        <?php else: ?>
+        <div class="manga-card-no-img">Pas d'image</div>
         <?php endif; ?>
-
-        <dt>Tomes</dt>
-        <dd>
-          <?= (int) $manga['volumes'] ?>
-          (<?= match($manga['status']) {
-            'ongoing'   => 'en cours',
-            'completed' => 'terminé',
-            'on_hold'   => 'en pause',
-            default     => htmlspecialchars($manga['status'])
-          } ?>)
-        </dd>
-      </dl>
-      <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">Voir la fiche</a>
+        <div class="manga-card-img-overlay">
+          <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>"
+             class="overlay-btn">Voir la fiche</a>
+        </div>
+      </div>
+      <div class="manga-card-body">
+        <h2>
+          <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+            <?= htmlspecialchars($manga['title']) ?>
+          </a>
+        </h2>
+        <div class="manga-card-meta">
+          <?= htmlspecialchars($manga['author']) ?>
+          <?php if (!empty($manga['genre'])): ?>
+          — <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
+              <?= htmlspecialchars($manga['genre']) ?>
+            </a>
+          <?php endif; ?>
+        </div>
+        <div class="manga-card-meta" style="margin-top:.3rem;">
+          <?php $status_label = match($manga['status']) {
+            'ongoing'   => ['En cours',  'badge-ongoing'],
+            'completed' => ['Terminé',   'badge-completed'],
+            'on_hold'   => ['En pause',  'badge-on-hold'],
+            default     => [htmlspecialchars($manga['status']), ''],
+          }; ?>
+          <span class="badge <?= $status_label[1] ?>"><?= $status_label[0] ?></span>
+          <span><?= (int) $manga['volumes'] ?> tome<?= $manga['volumes'] > 1 ? 's' : '' ?></span>
+        </div>
+      </div>
     </article>
   </li>
   <?php endforeach; ?>
