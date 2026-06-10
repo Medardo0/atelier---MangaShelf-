@@ -29,6 +29,7 @@ $page_title = $page_title ?? 'MangaShelf';
       <ul>
         <?php if (is_logged_in()): ?>
         <li><strong><?= htmlspecialchars($_SESSION['username']) ?></strong></li>
+        <li><a href="/mangashelf/public/collection">Mes collections</a></li>
         <li>
           <form method="post" action="/mangashelf/public/auth/logout">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">

@@ -1,7 +1,6 @@
 <?php
 /**
  * core/html.php
- * Production du HTML — la pièce manquante évoquée en fin de session 8.
  *
  * Rôle : permettre à un controller d'utiliser une vue PHP
  * sans écrire lui-même tout le HTML dans une chaîne.
@@ -12,9 +11,6 @@
  *   → injecte les données comme variables locales
  *   → retourne le HTML produit (ne fait pas echo)
  *
- * Règle importante :
- *   render() retourne une chaîne.
- *   C'est toujours http_out() qui envoie au navigateur.
  */
 
 /**

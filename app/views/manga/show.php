@@ -16,6 +16,44 @@
   </dl>
   <section><h2>Synopsis</h2><p><?= htmlspecialchars($manga['synopsis']) ?></p></section>
 </article>
+<?php if (!empty($memberships)): ?>
+<?php
+$collection_labels = [
+    'favorites' => 'Favoris',
+    'wishlist'  => 'Wishlist',
+    'reading'   => 'En cours de lecture',
+    'completed' => 'Terminés',
+];
+$redirect_back = '/mangashelf/public/manga/show/' . htmlspecialchars($manga['slug']);
+?>
+<section aria-label="Mes collections">
+  <h2>Ajouter à une collection</h2>
+  <ul>
+    <?php foreach ($memberships as $col): ?>
+    <li>
+      <?php if ($col['has_item']): ?>
+      <form method="post" action="/mangashelf/public/collection/remove" style="display:inline">
+        <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
+        <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
+        <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
+        <input type="hidden" name="redirect_to"   value="<?= $redirect_back ?>">
+        <button type="submit">✓ <?= $collection_labels[$col['type']] ?? htmlspecialchars($col['type']) ?> — Retirer</button>
+      </form>
+      <?php else: ?>
+      <form method="post" action="/mangashelf/public/collection/add" style="display:inline">
+        <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
+        <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
+        <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
+        <input type="hidden" name="redirect_to"   value="<?= $redirect_back ?>">
+        <button type="submit">+ <?= $collection_labels[$col['type']] ?? htmlspecialchars($col['type']) ?></button>
+      </form>
+      <?php endif; ?>
+    </li>
+    <?php endforeach; ?>
+  </ul>
+</section>
+<?php endif; ?>
+
 <?php if (!empty($similaires)): ?>
 <aside>
   <h2>Mangas similaires</h2>

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/manga.php';
+require_once __DIR__ . '/../models/collection.php';
 
 function manga_index(?string $id = null): string
 {
@@ -19,11 +20,15 @@ function manga_show(?string $id = null): string
         return error_page(404, 'Manga introuvable.');
     }
 
-    $similaires = manga_get_similar($manga['id']);
+    $similaires   = manga_get_similar($manga['id']);
+    $memberships  = is_logged_in()
+        ? collection_get_item_memberships((int) $_SESSION['user_id'], $manga['id'])
+        : [];
 
     return render_in_layout('manga/show', 'layouts/main', [
-        'page_title' => $manga['title'] . ' — MangaShelf',
-        'manga'      => $manga,
-        'similaires' => $similaires,
+        'page_title'  => $manga['title'] . ' — MangaShelf',
+        'manga'       => $manga,
+        'similaires'  => $similaires,
+        'memberships' => $memberships,
     ]);
 }
