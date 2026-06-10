@@ -5,6 +5,7 @@
  */
 $page_title = $page_title ?? 'Administration';
 $active_nav = $active_nav ?? '';
+$stats      = $stats ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="fr">

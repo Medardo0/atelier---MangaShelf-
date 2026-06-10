@@ -12,10 +12,12 @@
  */
 
 require_once __DIR__ . '/../../core/Auth.php';
+require_once __DIR__ . '/../models/manga.php';
+require_once __DIR__ . '/../models/tag.php';
 
 function admin_index(?string $id = null): string
 {
-    header('Location: /admin/dashboard');
+    header('Location: /mangashelf/public/admin/dashboard');
     exit;
 }
 
@@ -23,7 +25,7 @@ function admin_login(?string $id = null): string
 {
     // Déjà connecté → dashboard
     if (is_logged_in() && current_role() === 'admin') {
-        header('Location: /admin/dashboard');
+        header('Location: /mangashelf/public/admin/dashboard');
         exit;
     }
 
@@ -48,7 +50,7 @@ function admin_login(?string $id = null): string
             $_SESSION['last_activity'] = time();
             $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
 
-            header('Location: /admin/dashboard');
+            header('Location: /mangashelf/public/admin/dashboard');
             exit;
         }
 
@@ -88,6 +90,157 @@ function admin_dashboard(?string $id = null): string
     ];
 
     return render_in_layout('admin/dashboard/index', 'layouts/admin', $data);
+}
+
+function admin_mangas(?string $id = null): string
+{
+    require_auth('admin');
+
+    return render_in_layout('admin/manga/list', 'layouts/admin', [
+        'page_title' => 'Mangas — Admin',
+        'active_nav' => 'mangas',
+        'mangas'     => manga_get_all_admin(),
+    ]);
+}
+
+function admin_manga_create(?string $id = null): string
+{
+    require_auth('admin');
+
+    $errors = [];
+    $old    = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        verify_csrf();
+
+        $old    = $_POST;
+        $title  = trim($_POST['title'] ?? '');
+        $author = trim($_POST['author'] ?? '');
+
+        if ($title  === '') $errors[] = 'Le titre est obligatoire.';
+        if ($author === '') $errors[] = "L'auteur est obligatoire.";
+
+        if (empty($errors)) {
+            $tag_ids = array_map('intval', (array) ($_POST['tags'] ?? []));
+            manga_create([
+                'title'             => $title,
+                'author'            => $author,
+                'volumes'           => (int) ($_POST['volumes'] ?? 0),
+                'series_status'     => in_array($_POST['series_status'] ?? '', ['ongoing', 'completed', 'on_hold'], true)
+                                           ? $_POST['series_status'] : 'ongoing',
+                'content'           => trim($_POST['content'] ?? ''),
+                'short_description' => trim($_POST['short_description'] ?? ''),
+                'status'            => ($_POST['status'] ?? '') === 'draft' ? 'draft' : 'published',
+            ], $tag_ids);
+
+            header('Location: /mangashelf/public/admin/mangas');
+            exit;
+        }
+    }
+
+    return render_in_layout('admin/manga/form', 'layouts/admin', [
+        'page_title' => 'Ajouter un manga — Admin',
+        'active_nav' => 'mangas',
+        'errors'     => $errors,
+        'old'        => $old,
+        'manga'      => null,
+        'all_tags'   => tag_get_all(),
+    ]);
+}
+
+function admin_manga_edit(?string $id = null): string
+{
+    require_auth('admin');
+
+    if (empty($id)) {
+        return error_page(400, 'Identifiant manquant.');
+    }
+
+    $manga = manga_get_by_id((int) $id);
+    if ($manga === null) {
+        return error_page(404, 'Manga introuvable.');
+    }
+
+    $errors = [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        verify_csrf();
+
+        $title  = trim($_POST['title'] ?? '');
+        $author = trim($_POST['author'] ?? '');
+
+        if ($title  === '') $errors[] = 'Le titre est obligatoire.';
+        if ($author === '') $errors[] = "L'auteur est obligatoire.";
+
+        if (empty($errors)) {
+            $tag_ids = array_map('intval', (array) ($_POST['tags'] ?? []));
+            manga_update((int) $id, [
+                'title'             => $title,
+                'author'            => $author,
+                'volumes'           => (int) ($_POST['volumes'] ?? 0),
+                'series_status'     => in_array($_POST['series_status'] ?? '', ['ongoing', 'completed', 'on_hold'], true)
+                                           ? $_POST['series_status'] : 'ongoing',
+                'content'           => trim($_POST['content'] ?? ''),
+                'short_description' => trim($_POST['short_description'] ?? ''),
+                'status'            => ($_POST['status'] ?? '') === 'draft' ? 'draft' : 'published',
+            ], $tag_ids);
+
+            header('Location: /mangashelf/public/admin/mangas');
+            exit;
+        }
+
+        // Erreur : réafficher avec les valeurs POST
+        $manga = array_merge($manga, [
+            'title'             => $title,
+            'author'            => $author,
+            'volumes'           => $_POST['volumes'] ?? $manga['volumes'],
+            'series_status'     => $_POST['series_status'] ?? $manga['series_status'],
+            'content'           => $_POST['content'] ?? $manga['content'],
+            'short_description' => $_POST['short_description'] ?? $manga['short_description'],
+            'status'            => $_POST['status'] ?? $manga['status'],
+            'tag_ids'           => array_map('intval', (array) ($_POST['tags'] ?? [])),
+        ]);
+    }
+
+    return render_in_layout('admin/manga/form', 'layouts/admin', [
+        'page_title' => 'Modifier ' . $manga['title'] . ' — Admin',
+        'active_nav' => 'mangas',
+        'errors'     => $errors,
+        'old'        => [],
+        'manga'      => $manga,
+        'all_tags'   => tag_get_all(),
+    ]);
+}
+
+function admin_manga_delete(?string $id = null): string
+{
+    require_auth('admin');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id)) {
+        verify_csrf();
+        manga_delete((int) $id);
+    }
+
+    header('Location: /mangashelf/public/admin/mangas');
+    exit;
+}
+
+function admin_genres(?string $id = null): string
+{
+    require_auth('admin');
+    return render_in_layout('admin/genres/index', 'layouts/admin', [
+        'page_title' => 'Genres & Tags — Admin',
+        'active_nav' => 'genres',
+    ]);
+}
+
+function admin_messages(?string $id = null): string
+{
+    require_auth('admin');
+    return render_in_layout('admin/messages/index', 'layouts/admin', [
+        'page_title' => 'Messages — Admin',
+        'active_nav' => 'messages',
+    ]);
 }
 
 function admin_logout(?string $id = null): string

@@ -177,3 +177,112 @@ function manga_get_similar(int $manga_id, int $limit = 3): array
     $stmt->execute();
     return $stmt->fetchAll();
 }
+
+// ── Admin CRUD ────────────────────────────────────────────────
+
+function manga_get_all_admin(): array
+{
+    $stmt = db()->query(
+        "SELECT id, title, slug, author, volumes, series_status, status, created_at
+         FROM item
+         ORDER BY created_at DESC"
+    );
+    return $stmt->fetchAll();
+}
+
+function manga_get_by_id(int $id): ?array
+{
+    $stmt = db()->prepare(
+        "SELECT id, title, slug, author, volumes, series_status,
+                content, short_description, status
+         FROM item WHERE id = :id"
+    );
+    $stmt->execute([':id' => $id]);
+    $manga = $stmt->fetch();
+    if (!$manga) return null;
+
+    $stmt2 = db()->prepare("SELECT tag_id FROM item_tag WHERE item_id = :id");
+    $stmt2->execute([':id' => $id]);
+    $manga['tag_ids'] = array_column($stmt2->fetchAll(), 'tag_id');
+
+    return $manga;
+}
+
+function manga_make_slug(string $title): string
+{
+    $slug = strtolower($title);
+    $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug) ?: $slug;
+    $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
+    return trim($slug, '-');
+}
+
+function manga_sync_tags(int $manga_id, array $tag_ids): void
+{
+    $del = db()->prepare("DELETE FROM item_tag WHERE item_id = :id");
+    $del->execute([':id' => $manga_id]);
+
+    if (empty($tag_ids)) return;
+
+    $ins = db()->prepare("INSERT INTO item_tag (item_id, tag_id) VALUES (:item_id, :tag_id)");
+    foreach ($tag_ids as $tag_id) {
+        $ins->execute([':item_id' => $manga_id, ':tag_id' => (int) $tag_id]);
+    }
+}
+
+function manga_create(array $data, array $tag_ids): int
+{
+    $slug = manga_make_slug($data['title']);
+    $stmt = db()->prepare("SELECT COUNT(*) FROM item WHERE slug LIKE :slug");
+    $stmt->execute([':slug' => $slug . '%']);
+    $count = (int) $stmt->fetchColumn();
+    if ($count > 0) $slug .= '-' . ($count + 1);
+
+    $stmt = db()->prepare(
+        "INSERT INTO item (title, slug, author, volumes, series_status, content, short_description, status)
+         VALUES (:title, :slug, :author, :volumes, :series_status, :content, :short_description, :status)"
+    );
+    $stmt->execute([
+        ':title'             => $data['title'],
+        ':slug'              => $slug,
+        ':author'            => $data['author'],
+        ':volumes'           => (int) ($data['volumes'] ?? 0),
+        ':series_status'     => $data['series_status'],
+        ':content'           => $data['content'] ?? '',
+        ':short_description' => $data['short_description'] ?? '',
+        ':status'            => $data['status'] ?? 'published',
+    ]);
+    $id = (int) db()->lastInsertId();
+    manga_sync_tags($id, $tag_ids);
+    return $id;
+}
+
+function manga_update(int $id, array $data, array $tag_ids): void
+{
+    $stmt = db()->prepare(
+        "UPDATE item
+         SET title=:title, author=:author, volumes=:volumes,
+             series_status=:series_status, content=:content,
+             short_description=:short_description, status=:status
+         WHERE id=:id"
+    );
+    $stmt->execute([
+        ':title'             => $data['title'],
+        ':author'            => $data['author'],
+        ':volumes'           => (int) ($data['volumes'] ?? 0),
+        ':series_status'     => $data['series_status'],
+        ':content'           => $data['content'] ?? '',
+        ':short_description' => $data['short_description'] ?? '',
+        ':status'            => $data['status'] ?? 'published',
+        ':id'                => $id,
+    ]);
+    manga_sync_tags($id, $tag_ids);
+}
+
+function manga_delete(int $id): void
+{
+    $del_tags = db()->prepare("DELETE FROM item_tag WHERE item_id = :id");
+    $del_tags->execute([':id' => $id]);
+
+    $del = db()->prepare("DELETE FROM item WHERE id = :id");
+    $del->execute([':id' => $id]);
+}
