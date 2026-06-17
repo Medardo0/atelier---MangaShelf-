@@ -58,6 +58,11 @@ function http_in(string $request_uri): array
  */
 function http_out(int $status, string $html): void
 {
+    $current_status = http_response_code();
+    if ($status === 200 && $current_status >= 400) {
+        $status = $current_status;
+    }
+
     http_response_code($status);
     echo $html;
 }

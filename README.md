@@ -42,7 +42,7 @@ via la règle de réécriture Apache dans `public/.htaccess`.
 
 - Schéma SQL : `database.sql` à importer dans phpMyAdmin
 - 7 tables : `operator`, `item`, `item_tag`, `tag`, `message`, `collection`, `collection_item`
-- Données de base : 1 admin (`admin` / `password`)
+- Données de démonstration : 6 mangas, 13 genres/tags, 1 admin (`admin` / `password`)
 
 ### Router MVC (`core/http.php`, `core/router.php`, `core/html.php`)
 
