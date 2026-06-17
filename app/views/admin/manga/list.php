@@ -1,9 +1,12 @@
 ﻿<h1>Mangas <span>(<?= count($mangas) ?>)</span></h1>
-<a href="/admin/manga_create">+ Ajouter un manga</a>
+<div class="admin-toolbar">
+  <a href="/admin/manga_create">+ Ajouter un manga</a>
+</div>
 
 <?php if (empty($mangas)): ?>
 <p>Aucun manga dans la base de données.</p>
 <?php else: ?>
+<div class="admin-table">
 <table>
   <caption>Liste des mangas</caption>
   <thead>
@@ -43,4 +46,5 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+</div>
 <?php endif; ?>

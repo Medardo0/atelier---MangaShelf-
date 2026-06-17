@@ -1,9 +1,12 @@
 ﻿<h1>Genres &amp; Tags</h1>
-<a href="/admin/genre_create">+ Ajouter</a>
+<div class="admin-toolbar">
+  <a href="/admin/genre_create">+ Ajouter</a>
+</div>
 
 <?php if (empty($tags)): ?>
 <p>Aucun genre ou tag dans la base de données.</p>
 <?php else: ?>
+<div class="admin-table">
 <table>
   <caption>Liste des genres et tags</caption>
   <thead>
@@ -29,4 +32,5 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+</div>
 <?php endif; ?>
