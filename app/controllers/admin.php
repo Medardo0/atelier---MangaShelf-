@@ -38,55 +38,6 @@ function upload_cover(string $slug): ?string
 
 function admin_index(?string $id = null): string
 {
-    header('Location: /admin/dashboard');
-    exit;
-}
-
-function admin_login(?string $id = null): string
-{
-    // Déjà connecté → dashboard
-    if (is_logged_in() && current_role() === 'admin') {
-        header('Location: /admin/dashboard');
-        exit;
-    }
-
-    // Traitement POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        verify_csrf();
-
-        $username = trim($_POST['username'] ?? '');
-        $password = $_POST['password'] ?? '';
-
-        $stmt = db()->prepare(
-            'SELECT id, username, password, role FROM operator WHERE username = ? LIMIT 1'
-        );
-        $stmt->execute([$username]);
-        $operator = $stmt->fetch();
-
-        if ($operator && $operator['role'] === 'admin' && password_verify($password, $operator['password'])) {
-            session_regenerate_id(true);
-            $_SESSION['user_id']       = $operator['id'];
-            $_SESSION['username']      = $operator['username'];
-            $_SESSION['role']          = $operator['role'];
-            $_SESSION['last_activity'] = time();
-            $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
-
-            header('Location: /admin/dashboard');
-            exit;
-        }
-
-        return render('admin/login/index', ['error' => true]);
-    }
-
-    // GET → afficher le formulaire
-    return render('admin/login/index', [
-        'error'   => isset($_GET['error']),
-        'expired' => isset($_GET['expired']),
-    ]);
-}
-
-function admin_dashboard(?string $id = null): string
-{
     require_auth('admin');
 
     $stmt = db()->query(
@@ -110,6 +61,50 @@ function admin_dashboard(?string $id = null): string
 
     return render_in_layout('admin/dashboard/index', 'layouts/admin', $data);
 }
+
+// function admin_login(?string $id = null): string
+// {
+//     // Déjà connecté → dashboard
+//     if (is_logged_in() && current_role() === 'admin') {
+//         header('Location: /admin/dashboard');
+//         exit;
+//     }
+
+//     // Traitement POST
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//         verify_csrf();
+
+//         $username = trim($_POST['username'] ?? '');
+//         $password = $_POST['password'] ?? '';
+
+//         $stmt = db()->prepare(
+//             'SELECT id, username, password, role FROM operator WHERE username = ? LIMIT 1'
+//         );
+//         $stmt->execute([$username]);
+//         $operator = $stmt->fetch();
+
+//         if ($operator && $operator['role'] === 'admin' && password_verify($password, $operator['password'])) {
+//             session_regenerate_id(true);
+//             $_SESSION['user_id']       = $operator['id'];
+//             $_SESSION['username']      = $operator['username'];
+//             $_SESSION['role']          = $operator['role'];
+//             $_SESSION['last_activity'] = time();
+//             $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
+
+//             header('Location: /admin/dashboard');
+//             exit;
+//         }
+
+//         return render('admin/login/index', ['error' => true]);
+//     }
+
+//     // GET → afficher le formulaire
+//     return render('admin/login/index', [
+//         'error'   => isset($_GET['error']),
+//         'expired' => isset($_GET['expired']),
+//     ]);
+// }
+
 
 function admin_mangas(?string $id = null): string
 {
@@ -391,19 +386,19 @@ function admin_message_delete(?string $id = null): string
     exit;
 }
 
-function admin_logout(?string $id = null): string
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        verify_csrf();
-        $_SESSION = [];
-        if (ini_get('session.use_cookies')) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params['path'], $params['domain'],
-                $params['secure'], $params['httponly']);
-        }
-        session_destroy();
-    }
-    header('Location: /admin/login');
-    exit;
-}
+// function admin_logout(?string $id = null): string
+// {
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//         verify_csrf();
+//         $_SESSION = [];
+//         if (ini_get('session.use_cookies')) {
+//             $params = session_get_cookie_params();
+//             setcookie(session_name(), '', time() - 42000,
+//                 $params['path'], $params['domain'],
+//                 $params['secure'], $params['httponly']);
+//         }
+//         session_destroy();
+//     }
+//     header('Location: /admin/login');
+//     exit;
+// }

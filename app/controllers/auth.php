@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/operator.php';
 function auth_connexion(?string $id = null): string
 {
     if (is_logged_in()) {
-        header('Location: /');
+        header('Location: /admin');
         exit;
     }
 
@@ -36,7 +36,7 @@ function auth_connexion(?string $id = null): string
                 $_SESSION['role']          = $user['role'];
                 $_SESSION['last_activity'] = time();
                 $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
-                header('Location: /');
+                header('Location: /admin');
                 exit;
             }
         }
