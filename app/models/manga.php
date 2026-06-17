@@ -159,6 +159,48 @@ function manga_get_recent(int $limit = 4): array
     return $stmt->fetchAll();
 }
 
+function manga_get_home_shelves(int $items_per_shelf = 6, int $max_shelves = 4): array
+{
+    $stmt = db()->query(
+        "SELECT i.id, i.title, i.slug, i.author, i.main_image,
+                i.series_status AS status, t.name AS genre, t.slug AS genre_slug
+         FROM item i
+         JOIN item_tag it ON it.item_id = i.id
+         JOIN tag t ON t.id = it.tag_id AND t.type = 'genre'
+         WHERE i.status = 'published'
+         ORDER BY
+           CASE
+             WHEN t.name IN ('Romance', 'Fantasy', 'Science-fiction', 'Shonen', 'Seinen', 'Action', 'Aventure', 'Drame')
+             THEN FIELD(t.name, 'Romance', 'Fantasy', 'Science-fiction', 'Shonen', 'Seinen', 'Action', 'Aventure', 'Drame')
+             ELSE 999
+           END,
+           t.name ASC,
+           i.created_at DESC,
+           i.title ASC"
+    );
+
+    $shelves = [];
+    foreach ($stmt->fetchAll() as $manga) {
+        $genre = $manga['genre'];
+        if (!isset($shelves[$genre])) {
+            if (count($shelves) >= $max_shelves) {
+                continue;
+            }
+            $shelves[$genre] = [
+                'name' => $genre,
+                'slug' => $manga['genre_slug'],
+                'mangas' => [],
+            ];
+        }
+
+        if (count($shelves[$genre]['mangas']) < $items_per_shelf) {
+            $shelves[$genre]['mangas'][] = $manga;
+        }
+    }
+
+    return array_values($shelves);
+}
+
 function manga_get_similar(int $manga_id, int $limit = 3): array
 {
     $stmt = db()->prepare(

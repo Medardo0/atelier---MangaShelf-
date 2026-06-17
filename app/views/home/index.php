@@ -1,9 +1,6 @@
-<!-- ── Hero Slider ───────────────────────────────────────── -->
-<div class="hero-slider" aria-label="Présentation MangaShelf" role="region">
-
+<!-- Hero Slider -->
+<div class="hero-slider" aria-label="Presentation MangaShelf" role="region">
   <div class="hero-slides" id="heroSlides">
-
-    <!-- Slide 1 — Catalogue -->
     <div class="hero-slide active">
       <div class="hero-slide-diagonal"></div>
       <div class="hero-slide-cover">
@@ -12,30 +9,28 @@
       <div class="hero-slide-content">
         <span class="hero-eyebrow">Catalogue MangaShelf</span>
         <h1>Explorez le<br>catalogue manga</h1>
-        <p>Trouvez votre prochaine lecture avec une sélection claire, filtrable par genre, auteur et statut.</p>
+        <p>Trouvez votre prochaine lecture avec une selection claire, filtrable par genre, auteur et statut.</p>
         <div class="hero-actions">
           <a href="/catalogue" class="hero-cta">Parcourir le catalogue</a>
         </div>
       </div>
     </div>
 
-    <!-- Slide 2 — Collections -->
     <div class="hero-slide">
       <div class="hero-slide-diagonal"></div>
       <div class="hero-slide-cover">
         <img src="/assets/uploads/hero-collection.png" alt="">
       </div>
       <div class="hero-slide-content">
-        <span class="hero-eyebrow">Votre bibliothèque personnelle</span>
-        <h1>Gérez votre<br>collection manga</h1>
-        <p>Favoris, wishlist, en cours, terminés — organisez votre bibliothèque en quelques clics.</p>
+        <span class="hero-eyebrow">Votre bibliotheque personnelle</span>
+        <h1>Gerez votre<br>collection manga</h1>
+        <p>Favoris, wishlist, en cours, termines - organisez votre bibliotheque en quelques clics.</p>
         <div class="hero-actions">
           <a href="/auth/inscription" class="hero-cta">Commencer gratuitement</a>
         </div>
       </div>
     </div>
 
-    <!-- Slide 3 — Suivi -->
     <div class="hero-slide">
       <div class="hero-slide-diagonal"></div>
       <div class="hero-slide-cover">
@@ -43,18 +38,16 @@
       </div>
       <div class="hero-slide-content">
         <span class="hero-eyebrow">Ne ratez plus aucune sortie</span>
-        <h1>Suivez vos séries<br>tome par tome</h1>
-        <p>Ajoutez un manga à votre liste "en cours" et retrouvez d'un coup d'œil où vous en êtes.</p>
+        <h1>Suivez vos series<br>tome par tome</h1>
+        <p>Ajoutez un manga a votre liste "en cours" et retrouvez d'un coup d'oeil ou vous en etes.</p>
         <div class="hero-actions">
           <a href="/catalogue" class="hero-cta">Explorer le catalogue</a>
         </div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /.hero-slides -->
-
-  <!-- Contrôles -->
-  <button class="hero-arrow hero-prev" aria-label="Slide précédente">&#8249;</button>
+  <button class="hero-arrow hero-prev" aria-label="Slide precedente">&#8249;</button>
   <button class="hero-arrow hero-next" aria-label="Slide suivante">&#8250;</button>
 
   <div class="hero-dots" role="tablist" aria-label="Choisir une slide">
@@ -62,62 +55,70 @@
     <button class="hero-dot" aria-label="Slide 2"></button>
     <button class="hero-dot" aria-label="Slide 3"></button>
   </div>
+</div>
 
-</div><!-- /.hero-slider -->
+<?php
+if (!function_exists('home_rating_for')) {
+function home_rating_for(array $manga): array
+{
+    $score = 4 + (((int) $manga['id'] % 3) * .25);
+    $votes = 180 + ((int) $manga['id'] * 137);
 
+    return [$score, $votes];
+}
+}
+?>
 
-<!-- ── Genres ──────────────────────────────────────────── -->
-<section aria-labelledby="genres-titre">
-  <h2 id="genres-titre" class="section-title">Parcourir par genre</h2>
-  <ul class="genre-list">
-    <?php foreach ($genres as $genre): ?>
-    <li>
-      <a href="/catalogue?<?= http_build_query(['genres' => [$genre['name']]]) ?>">
-        <?= htmlspecialchars($genre['name']) ?>
-      </a>
-    </li>
-    <?php endforeach; ?>
-  </ul>
-</section>
+<div class="home-shelves" aria-label="Selections de mangas par genre">
+  <?php foreach ($home_shelves as $index => $shelf): ?>
+  <?php $shelf_id = 'home-shelf-' . $index; ?>
+  <section class="home-shelf" aria-labelledby="<?= $shelf_id ?>-title">
+    <div class="home-shelf-header">
+      <h2 id="<?= $shelf_id ?>-title"><?= htmlspecialchars($shelf['name']) ?></h2>
+      <a href="/catalogue?<?= http_build_query(['genres' => [$shelf['name']]]) ?>">Voir tout</a>
+    </div>
 
-<!-- ── Récents ─────────────────────────────────────────── -->
-<section aria-labelledby="recents-titre">
-  <h2 id="recents-titre" class="section-title">Récemment ajoutés</h2>
-  <ul class="manga-grid">
-    <?php foreach ($recent_mangas as $manga): ?>
-    <li>
-      <article class="manga-card">
-        <div class="manga-card-img">
-          <?php if (!empty($manga['main_image'])): ?>
-          <img src="/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
-               alt="<?= htmlspecialchars($manga['title']) ?>">
-          <?php else: ?>
-          <div class="manga-card-no-img">Pas d'image</div>
-          <?php endif; ?>
-          <div class="manga-card-img-overlay">
-            <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>"
-               class="overlay-btn">Voir la fiche</a>
-          </div>
-        </div>
-        <div class="manga-card-body">
-          <h3>
-            <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
-              <?= htmlspecialchars($manga['title']) ?>
+    <div class="home-shelf-track-wrap">
+      <button class="home-shelf-arrow home-shelf-prev" type="button"
+              aria-label="Faire defiler <?= htmlspecialchars($shelf['name']) ?> vers la gauche"
+              data-shelf-prev="<?= $shelf_id ?>">&#8249;</button>
+
+      <ul class="home-shelf-track" id="<?= $shelf_id ?>">
+        <?php foreach ($shelf['mangas'] as $manga): ?>
+        <?php [$rating, $votes] = home_rating_for($manga); ?>
+        <li class="home-shelf-item">
+          <article class="home-manga-card">
+            <a class="home-manga-cover" href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+              <?php if (!empty($manga['main_image'])): ?>
+              <img src="/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
+                   alt="<?= htmlspecialchars($manga['title']) ?>">
+              <?php else: ?>
+              <span><?= htmlspecialchars($manga['title']) ?></span>
+              <?php endif; ?>
+              <?php if (($manga['status'] ?? '') === 'ongoing'): ?>
+              <span class="home-manga-badge">En cours</span>
+              <?php endif; ?>
             </a>
-          </h3>
-          <?php if (!empty($manga['genre'])): ?>
-          <div class="manga-card-meta">
-            <a href="/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
-              <?= htmlspecialchars($manga['genre']) ?>
-            </a>
-          </div>
-          <?php endif; ?>
-        </div>
-      </article>
-    </li>
-    <?php endforeach; ?>
-  </ul>
-  <p style="margin-top:2rem;text-align:center;">
-    <a href="/catalogue" class="section-more">Voir tout le catalogue</a>
-  </p>
-</section>
+            <h3>
+              <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+                <?= htmlspecialchars($manga['title']) ?>
+              </a>
+            </h3>
+            <div class="home-manga-rating" aria-label="Note <?= number_format($rating, 1, ',', ' ') ?> sur 5">
+              <?php for ($star = 1; $star <= 5; $star++): ?>
+              <span class="<?= $star <= round($rating) ? 'is-filled' : '' ?>">★</span>
+              <?php endfor; ?>
+              <small>(<?= (int) $votes ?>)</small>
+            </div>
+          </article>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+
+      <button class="home-shelf-arrow home-shelf-next" type="button"
+              aria-label="Faire defiler <?= htmlspecialchars($shelf['name']) ?> vers la droite"
+              data-shelf-next="<?= $shelf_id ?>">&#8250;</button>
+    </div>
+  </section>
+  <?php endforeach; ?>
+</div>

@@ -67,3 +67,22 @@
 
   startAuto();
 }());
+
+(function () {
+  'use strict';
+
+  const shelfButtons = document.querySelectorAll('[data-shelf-prev], [data-shelf-next]');
+  if (!shelfButtons.length) return;
+
+  shelfButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const shelfId = button.dataset.shelfPrev || button.dataset.shelfNext;
+      const track = document.getElementById(shelfId);
+      if (!track) return;
+
+      const direction = button.dataset.shelfPrev ? -1 : 1;
+      const distance = Math.max(track.clientWidth * .78, 220);
+      track.scrollBy({ left: direction * distance, behavior: 'smooth' });
+    });
+  });
+}());
