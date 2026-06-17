@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $is_edit = $manga !== null;
 
 $title_val       = $is_edit ? $manga['title']             : ($old['title'] ?? '');
@@ -15,8 +15,8 @@ $selected_ids    = $is_edit
 $cover_val    = $is_edit ? ($manga['main_image'] ?? null) : null;
 
 $form_action = $is_edit
-    ? '/mangashelf/public/admin/manga_edit/' . (int) $manga['id']
-    : '/mangashelf/public/admin/manga_create';
+    ? '/admin/manga_edit/' . (int) $manga['id']
+    : '/admin/manga_create';
 ?>
 
 <h1><?= $is_edit ? 'Modifier ' . htmlspecialchars($manga['title']) : 'Ajouter un manga' ?></h1>
@@ -106,7 +106,7 @@ $form_action = $is_edit
   <div>
     <label for="cover">Image de couverture</label>
     <?php if (!empty($cover_val)): ?>
-    <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($cover_val) ?>"
+    <img src="/assets/uploads/<?= htmlspecialchars($cover_val) ?>"
          alt="Couverture actuelle" style="max-height:150px;display:block;margin-bottom:8px">
     <p>Choisir une nouvelle image remplacera celle-ci.</p>
     <?php endif; ?>
@@ -125,5 +125,5 @@ $form_action = $is_edit
   <button type="submit">
     <?= $is_edit ? 'Enregistrer les modifications' : 'Ajouter le manga' ?>
   </button>
-  <a href="/mangashelf/public/admin/mangas">Annuler</a>
+  <a href="/admin/mangas">Annuler</a>
 </form>

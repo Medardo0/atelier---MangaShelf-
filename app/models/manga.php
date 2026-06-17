@@ -145,7 +145,7 @@ function manga_get_one(string $slug): ?array
 function manga_get_recent(int $limit = 4): array
 {
     $stmt = db()->prepare(
-        "SELECT i.id, i.title, i.slug, i.series_status AS status,
+        "SELECT i.id, i.title, i.slug, i.main_image, i.series_status AS status,
                 (SELECT t.name FROM item_tag it JOIN tag t ON t.id = it.tag_id
                  WHERE it.item_id = i.id AND t.type = 'genre'
                  ORDER BY t.name LIMIT 1) AS genre

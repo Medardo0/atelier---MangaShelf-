@@ -1,5 +1,5 @@
-<nav aria-label="Retour">
-  <a href="/mangashelf/public/admin/messages">← Retour aux messages</a>
+﻿<nav aria-label="Retour">
+  <a href="/admin/messages">← Retour aux messages</a>
 </nav>
 
 <article>
@@ -20,7 +20,7 @@
   </section>
 </article>
 
-<form method="post" action="/mangashelf/public/admin/message_delete/<?= $message['id'] ?>">
+<form method="post" action="/admin/message_delete/<?= $message['id'] ?>">
   <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
   <button type="submit" onclick="return confirm('Supprimer ce message ?')">Supprimer</button>
 </form>

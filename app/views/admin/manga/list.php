@@ -1,5 +1,5 @@
-<h1>Mangas <span>(<?= count($mangas) ?>)</span></h1>
-<a href="/mangashelf/public/admin/manga_create">+ Ajouter un manga</a>
+﻿<h1>Mangas <span>(<?= count($mangas) ?>)</span></h1>
+<a href="/admin/manga_create">+ Ajouter un manga</a>
 
 <?php if (empty($mangas)): ?>
 <p>Aucun manga dans la base de données.</p>
@@ -30,8 +30,8 @@
       } ?></td>
       <td><?= $m['status'] === 'published' ? 'Publie' : 'Brouillon' ?></td>
       <td>
-        <a href="/mangashelf/public/admin/manga_edit/<?= $m['id'] ?>">Modifier</a>
-        <form method="post" action="/mangashelf/public/admin/manga_delete/<?= $m['id'] ?>" style="display:inline">
+        <a href="/admin/manga_edit/<?= $m['id'] ?>">Modifier</a>
+        <form method="post" action="/admin/manga_delete/<?= $m['id'] ?>" style="display:inline">
           <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
           <?php $confirm = "Supprimer '" . addslashes($m['title']) . "' ?"; ?>
           <button type="submit" onclick="return confirm('<?= htmlspecialchars($confirm) ?>')">

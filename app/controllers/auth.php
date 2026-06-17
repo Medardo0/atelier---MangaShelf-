@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../models/operator.php';
 
 function auth_connexion(?string $id = null): string
 {
     if (is_logged_in()) {
-        header('Location: /mangashelf/public/');
+        header('Location: /');
         exit;
     }
 
@@ -36,7 +36,7 @@ function auth_connexion(?string $id = null): string
                 $_SESSION['role']          = $user['role'];
                 $_SESSION['last_activity'] = time();
                 $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
-                header('Location: /mangashelf/public/');
+                header('Location: /');
                 exit;
             }
         }
@@ -51,7 +51,7 @@ function auth_connexion(?string $id = null): string
 function auth_inscription(?string $id = null): string
 {
     if (is_logged_in()) {
-        header('Location: /mangashelf/public/');
+        header('Location: /');
         exit;
     }
 
@@ -97,7 +97,7 @@ function auth_inscription(?string $id = null): string
             $_SESSION['role']          = 'user';
             $_SESSION['last_activity'] = time();
             $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
-            header('Location: /mangashelf/public/');
+            header('Location: /');
             exit;
         }
     }
@@ -122,6 +122,6 @@ function auth_logout(?string $id = null): string
         }
         session_destroy();
     }
-    header('Location: /mangashelf/public/');
+    header('Location: /');
     exit;
 }

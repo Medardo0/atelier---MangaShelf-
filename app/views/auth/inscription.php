@@ -1,4 +1,4 @@
-<div class="auth-page">
+﻿<div class="auth-page">
 <h1>Créer un compte</h1>
 <p>Rejoignez MangaShelf pour gérer votre collection, vos favoris et votre wishlist.</p>
 
@@ -12,7 +12,7 @@
 </div>
 <?php endif; ?>
 
-<form method="post" action="/mangashelf/public/auth/inscription" novalidate>
+<form method="post" action="/auth/inscription" novalidate>
   <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
 
   <div>
@@ -47,5 +47,5 @@
   <button type="submit">Créer mon compte</button>
 </form>
 
-<p>Déjà inscrit ? <a href="/mangashelf/public/auth/connexion">Se connecter</a></p>
+<p>Déjà inscrit ? <a href="/auth/connexion">Se connecter</a></p>
 </div>

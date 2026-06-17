@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../models/message.php';
 
 function contact_index(?string $id = null): string
@@ -23,7 +23,7 @@ function contact_index(?string $id = null): string
 
         if (empty($errors)) {
             message_create($name, $email, $subject, $body);
-            header('Location: /mangashelf/public/contact?sent=1');
+            header('Location: /contact?sent=1');
             exit;
         }
     }

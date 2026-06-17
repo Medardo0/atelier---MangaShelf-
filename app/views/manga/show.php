@@ -1,7 +1,7 @@
-<nav aria-label="Fil d'ariane">
+﻿<nav aria-label="Fil d'ariane">
   <ol>
-    <li><a href="/mangashelf/public/">Accueil</a></li>
-    <li><a href="/mangashelf/public/catalogue">Catalogue</a></li>
+    <li><a href="/">Accueil</a></li>
+    <li><a href="/catalogue">Catalogue</a></li>
     <li aria-current="page"><?= htmlspecialchars($manga['title']) ?></li>
   </ol>
 </nav>
@@ -9,7 +9,7 @@
 <div class="manga-show">
   <div class="manga-show-cover">
     <?php if (!empty($manga['main_image'])): ?>
-    <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
+    <img src="/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
          alt="Couverture de <?= htmlspecialchars($manga['title']) ?>">
     <?php else: ?>
     <div class="manga-show-cover-placeholder">Pas de couverture</div>
@@ -34,7 +34,7 @@
       <dt>Genres</dt>
       <dd>
         <?php foreach ($manga['genres'] as $g): ?>
-        <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$g]]) ?>">
+        <a href="/catalogue?<?= http_build_query(['genres' => [$g]]) ?>">
           <?= htmlspecialchars($g) ?>
         </a>
         <?php endforeach; ?>
@@ -57,7 +57,7 @@
       'reading'   => 'En cours',
       'completed' => 'Terminé',
     ];
-    $redirect_back = '/mangashelf/public/manga/show/' . htmlspecialchars($manga['slug']);
+    $redirect_back = '/manga/show/' . htmlspecialchars($manga['slug']);
     ?>
     <div class="manga-collections">
       <h2>Mes collections</h2>
@@ -65,7 +65,7 @@
         <?php foreach ($memberships as $col): ?>
         <li>
           <?php if ($col['has_item']): ?>
-          <form method="post" action="/mangashelf/public/collection/remove">
+          <form method="post" action="/collection/remove">
             <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
             <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
             <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
@@ -75,7 +75,7 @@
             </button>
           </form>
           <?php else: ?>
-          <form method="post" action="/mangashelf/public/collection/add">
+          <form method="post" action="/collection/add">
             <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
             <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
             <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
@@ -99,7 +99,7 @@
   <ul>
     <?php foreach ($similaires as $s): ?>
     <li>
-      <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($s['slug']) ?>">
+      <a href="/manga/show/<?= htmlspecialchars($s['slug']) ?>">
         <?= htmlspecialchars($s['title']) ?>
       </a>
     </li>

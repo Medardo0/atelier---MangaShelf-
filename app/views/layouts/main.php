@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * app/views/layouts/main.php
  * Template public partagé par toutes les vues publiques.
@@ -12,20 +12,20 @@ $page_title = $page_title ?? 'MangaShelf';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title) ?></title>
-  <link rel="stylesheet" href="/mangashelf/public/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <header role="banner">
-    <a href="/mangashelf/public/">Manga<strong>Shelf</strong></a>
+    <a href="/">Manga<strong>Shelf</strong></a>
     <nav aria-label="Navigation principale">
       <ul>
-        <li><a href="/mangashelf/public/">Accueil</a></li>
-        <li><a href="/mangashelf/public/catalogue">Catalogue</a></li>
-        <li><a href="/mangashelf/public/contact">Contact</a></li>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/catalogue">Catalogue</a></li>
+        <li><a href="/contact">Contact</a></li>
       </ul>
     </nav>
-    <form class="header-search" action="/mangashelf/public/catalogue" method="get" role="search">
+    <form class="header-search" action="/catalogue" method="get" role="search">
       <input type="search" name="q" placeholder="Rechercher un manga…"
              aria-label="Rechercher un manga"
              value="<?= htmlspecialchars($_GET['q'] ?? '') ?>">
@@ -40,16 +40,16 @@ $page_title = $page_title ?? 'MangaShelf';
       <ul>
         <?php if (is_logged_in()): ?>
         <li><strong><?= htmlspecialchars($_SESSION['username']) ?></strong></li>
-        <li><a href="/mangashelf/public/collection">Mes collections</a></li>
+        <li><a href="/collection">Mes collections</a></li>
         <li>
-          <form method="post" action="/mangashelf/public/auth/logout">
+          <form method="post" action="/auth/logout">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
             <button type="submit">Déconnexion</button>
           </form>
         </li>
         <?php else: ?>
-        <li><a href="/mangashelf/public/auth/connexion">Connexion</a></li>
-        <li><a href="/mangashelf/public/auth/inscription">Inscription</a></li>
+        <li><a href="/auth/connexion">Connexion</a></li>
+        <li><a href="/auth/inscription">Inscription</a></li>
         <?php endif; ?>
       </ul>
     </nav>
@@ -60,6 +60,6 @@ $page_title = $page_title ?? 'MangaShelf';
   <footer role="contentinfo">
     <p><small>&copy; 2025 MangaShelf</small></p>
   </footer>
-  <script src="/mangashelf/public/assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

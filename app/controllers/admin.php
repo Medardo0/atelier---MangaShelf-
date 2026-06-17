@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * app/controllers/admin.php
  * Controller d'administration.
@@ -38,7 +38,7 @@ function upload_cover(string $slug): ?string
 
 function admin_index(?string $id = null): string
 {
-    header('Location: /mangashelf/public/admin/dashboard');
+    header('Location: /admin/dashboard');
     exit;
 }
 
@@ -46,7 +46,7 @@ function admin_login(?string $id = null): string
 {
     // Déjà connecté → dashboard
     if (is_logged_in() && current_role() === 'admin') {
-        header('Location: /mangashelf/public/admin/dashboard');
+        header('Location: /admin/dashboard');
         exit;
     }
 
@@ -71,7 +71,7 @@ function admin_login(?string $id = null): string
             $_SESSION['last_activity'] = time();
             $_SESSION['csrf_token']    = bin2hex(random_bytes(32));
 
-            header('Location: /mangashelf/public/admin/dashboard');
+            header('Location: /admin/dashboard');
             exit;
         }
 
@@ -89,25 +89,23 @@ function admin_dashboard(?string $id = null): string
 {
     require_auth('admin');
 
+    $stmt = db()->query(
+        "SELECT i.id, i.title, i.status, i.created_at,
+                (SELECT t.name FROM item_tag it JOIN tag t ON t.id = it.tag_id
+                 WHERE it.item_id = i.id AND t.type = 'genre'
+                 ORDER BY t.name LIMIT 1) AS genre
+         FROM item i ORDER BY i.created_at DESC LIMIT 5"
+    );
+
     $data = [
-        'page_title'      => 'Dashboard',
-        'active_nav'      => 'dashboard',
-        'stats'           => [
-            'mangas_published' => 6,
-            'messages_unread'  => 3,
-            'genres_count'     => 13,
-            'users_count'      => 2,
+        'page_title'    => 'Dashboard',
+        'active_nav'    => 'dashboard',
+        'stats'         => [
+            'mangas_published' => (int) db()->query("SELECT COUNT(*) FROM item WHERE status = 'published'")->fetchColumn(),
+            'messages_unread'  => message_count_unread(),
+            'genres_count'     => (int) db()->query("SELECT COUNT(*) FROM tag")->fetchColumn(),
         ],
-        'recent_mangas'   => [
-            ['id' => 6, 'title' => 'Jujutsu Kaisen',  'genre' => 'Shonen', 'status' => 'published', 'created_at' => '2025-05-18'],
-            ['id' => 5, 'title' => 'Attack on Titan',  'genre' => 'Shonen', 'status' => 'published', 'created_at' => '2025-05-17'],
-            ['id' => 4, 'title' => 'Vinland Saga',     'genre' => 'Seinen', 'status' => 'published', 'created_at' => '2025-05-16'],
-        ],
-        'unread_messages' => [
-            ['id' => 1, 'sender' => 'Jean Dupont',  'subject' => 'Question sur un manga', 'created_at' => '2025-05-19'],
-            ['id' => 2, 'sender' => 'Marie Martin', 'subject' => 'Signalement d\'erreur',  'created_at' => '2025-05-18'],
-            ['id' => 3, 'sender' => 'Alex Bernard', 'subject' => 'Suggestion d\'ajout',    'created_at' => '2025-05-17'],
-        ],
+        'recent_mangas' => $stmt->fetchAll(),
     ];
 
     return render_in_layout('admin/dashboard/index', 'layouts/admin', $data);
@@ -157,7 +155,7 @@ function admin_manga_create(?string $id = null): string
                 'main_image'        => $cover,
             ], $tag_ids);
 
-            header('Location: /mangashelf/public/admin/mangas');
+            header('Location: /admin/mangas');
             exit;
         }
     }
@@ -218,7 +216,7 @@ function admin_manga_edit(?string $id = null): string
             }
             manga_update((int) $id, $new_data, $tag_ids);
 
-            header('Location: /mangashelf/public/admin/mangas');
+            header('Location: /admin/mangas');
             exit;
         }
 
@@ -254,7 +252,7 @@ function admin_manga_delete(?string $id = null): string
         manga_delete((int) $id);
     }
 
-    header('Location: /mangashelf/public/admin/mangas');
+    header('Location: /admin/mangas');
     exit;
 }
 
@@ -286,7 +284,7 @@ function admin_genre_create(?string $id = null): string
 
         if (empty($errors)) {
             tag_create($name, $type);
-            header('Location: /mangashelf/public/admin/genres');
+            header('Location: /admin/genres');
             exit;
         }
     }
@@ -321,7 +319,7 @@ function admin_genre_edit(?string $id = null): string
 
         if (empty($errors)) {
             tag_update((int) $id, $name, $type);
-            header('Location: /mangashelf/public/admin/genres');
+            header('Location: /admin/genres');
             exit;
         }
 
@@ -346,7 +344,7 @@ function admin_genre_delete(?string $id = null): string
         tag_delete((int) $id);
     }
 
-    header('Location: /mangashelf/public/admin/genres');
+    header('Location: /admin/genres');
     exit;
 }
 
@@ -389,7 +387,7 @@ function admin_message_delete(?string $id = null): string
         message_delete((int) $id);
     }
 
-    header('Location: /mangashelf/public/admin/messages');
+    header('Location: /admin/messages');
     exit;
 }
 

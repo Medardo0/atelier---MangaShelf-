@@ -1,6 +1,6 @@
-<h1>Catalogue de mangas <span>(<?= $total ?>)</span></h1>
+﻿<h1>Catalogue de mangas <span>(<?= $total ?>)</span></h1>
 
-<form action="/mangashelf/public/catalogue" method="get" class="catalogue-filters">
+<form action="/catalogue" method="get" class="catalogue-filters">
 
   <div>
     <label for="q">Recherche</label>
@@ -34,7 +34,7 @@
   <div>
     <button type="submit">Filtrer</button>
     <?php if (!empty(array_filter($filters))): ?>
-    <a href="/mangashelf/public/catalogue" style="margin-left:.75rem;font-size:.85rem;color:var(--grey-600);">
+    <a href="/catalogue" style="margin-left:.75rem;font-size:.85rem;color:var(--grey-600);">
       Réinitialiser
     </a>
     <?php endif; ?>
@@ -48,7 +48,7 @@ function pagination_url(array $filters, int $page): string
     $params = array_merge($filters, ['page' => $page]);
     unset($params['page']);
     if ($page > 1) $params['page'] = $page;
-    return '/mangashelf/public/catalogue' . ($params ? '?' . http_build_query($params) : '');
+    return '/catalogue' . ($params ? '?' . http_build_query($params) : '');
 }
 ?>
 
@@ -61,26 +61,26 @@ function pagination_url(array $filters, int $page): string
     <article class="manga-card">
       <div class="manga-card-img">
         <?php if (!empty($manga['main_image'])): ?>
-        <img src="/mangashelf/public/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
+        <img src="/assets/uploads/<?= htmlspecialchars($manga['main_image']) ?>"
              alt="<?= htmlspecialchars($manga['title']) ?>">
         <?php else: ?>
         <div class="manga-card-no-img">Pas d'image</div>
         <?php endif; ?>
         <div class="manga-card-img-overlay">
-          <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>"
+          <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>"
              class="overlay-btn">Voir la fiche</a>
         </div>
       </div>
       <div class="manga-card-body">
         <h2>
-          <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+          <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
             <?= htmlspecialchars($manga['title']) ?>
           </a>
         </h2>
         <div class="manga-card-meta">
           <?= htmlspecialchars($manga['author']) ?>
           <?php if (!empty($manga['genre'])): ?>
-          — <a href="/mangashelf/public/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
+          — <a href="/catalogue?<?= http_build_query(['genres' => [$manga['genre']]]) ?>">
               <?= htmlspecialchars($manga['genre']) ?>
             </a>
           <?php endif; ?>

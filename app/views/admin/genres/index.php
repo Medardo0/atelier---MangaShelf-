@@ -1,5 +1,5 @@
-<h1>Genres &amp; Tags</h1>
-<a href="/mangashelf/public/admin/genre_create">+ Ajouter</a>
+﻿<h1>Genres &amp; Tags</h1>
+<a href="/admin/genre_create">+ Ajouter</a>
 
 <?php if (empty($tags)): ?>
 <p>Aucun genre ou tag dans la base de données.</p>
@@ -16,8 +16,8 @@
       <td><?= $t['type'] === 'genre' ? 'Genre' : 'Tag' ?></td>
       <td><?= htmlspecialchars($t['slug']) ?></td>
       <td>
-        <a href="/mangashelf/public/admin/genre_edit/<?= $t['id'] ?>">Modifier</a>
-        <form method="post" action="/mangashelf/public/admin/genre_delete/<?= $t['id'] ?>" style="display:inline">
+        <a href="/admin/genre_edit/<?= $t['id'] ?>">Modifier</a>
+        <form method="post" action="/admin/genre_delete/<?= $t['id'] ?>" style="display:inline">
           <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
           <?php $confirm = "Supprimer '" . addslashes($t['name']) . "' ? Les mangas associes perdront ce tag."; ?>
           <button type="submit" onclick="return confirm('<?= htmlspecialchars($confirm) ?>')">

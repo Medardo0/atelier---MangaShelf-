@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 $is_edit  = $tag !== null;
 $name_val = $is_edit ? $tag['name'] : ($old['name'] ?? '');
 $type_val = $is_edit ? $tag['type'] : ($old['type'] ?? 'tag');
 $form_action = $is_edit
-    ? '/mangashelf/public/admin/genre_edit/' . (int) $tag['id']
-    : '/mangashelf/public/admin/genre_create';
+    ? '/admin/genre_edit/' . (int) $tag['id']
+    : '/admin/genre_create';
 ?>
 
 <h1><?= $is_edit ? 'Modifier ' . htmlspecialchars($tag['name']) : 'Ajouter un genre / tag' ?></h1>
@@ -37,5 +37,5 @@ $form_action = $is_edit
   </div>
 
   <button type="submit"><?= $is_edit ? 'Enregistrer' : 'Ajouter' ?></button>
-  <a href="/mangashelf/public/admin/genres">Annuler</a>
+  <a href="/admin/genres">Annuler</a>
 </form>

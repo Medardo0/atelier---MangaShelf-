@@ -3,7 +3,7 @@
 
 Options -Indexes
 RewriteEngine On
-RewriteBase /mangashelf/public/
+RewriteBase /
 
 # Ne pas réécrire si le fichier/dossier existe (assets, uploads)
 RewriteCond %{REQUEST_FILENAME} !-f

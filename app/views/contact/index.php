@@ -1,4 +1,4 @@
-<div class="contact-page">
+﻿<div class="contact-page">
 <h1>Contact</h1>
 
 <?php if ($sent): ?>
@@ -17,7 +17,7 @@
 </div>
 <?php endif; ?>
 
-<form method="post" action="/mangashelf/public/contact" novalidate>
+<form method="post" action="/contact" novalidate>
   <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
 
   <div>

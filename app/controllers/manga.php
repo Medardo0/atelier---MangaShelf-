@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../models/manga.php';
 require_once __DIR__ . '/../models/collection.php';
 
 function manga_index(?string $id = null): string
 {
-    header('Location: /mangashelf/public/catalogue');
+    header('Location: /catalogue');
     exit;
 }
 

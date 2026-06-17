@@ -1,11 +1,11 @@
-<?php
+﻿<?php
 $labels = [
     'favorites' => 'Favoris',
     'wishlist'  => 'Wishlist',
     'reading'   => 'En cours de lecture',
     'completed' => 'Terminés',
 ];
-$redirect_back = '/mangashelf/public/collection';
+$redirect_back = '/collection';
 ?>
 
 <h1>Mes collections</h1>
@@ -25,11 +25,11 @@ $redirect_back = '/mangashelf/public/collection';
   <ul>
     <?php foreach ($items as $manga): ?>
     <li>
-      <a href="/mangashelf/public/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
+      <a href="/manga/show/<?= htmlspecialchars($manga['slug']) ?>">
         <?= htmlspecialchars($manga['title']) ?>
       </a>
       — <?= htmlspecialchars($manga['author']) ?>
-      <form method="post" action="/mangashelf/public/collection/remove" style="display:inline">
+      <form method="post" action="/collection/remove" style="display:inline">
         <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
         <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
         <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">

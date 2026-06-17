@@ -1,4 +1,4 @@
-<h1>Messages</h1>
+﻿<h1>Messages</h1>
 
 <?php if (empty($messages)): ?>
 <p>Aucun message.</p>
@@ -13,14 +13,14 @@
     <tr <?= !$msg['is_read'] ? 'style="font-weight:bold"' : '' ?>>
       <td><?= htmlspecialchars($msg['sender_name']) ?></td>
       <td>
-        <a href="/mangashelf/public/admin/message_show/<?= $msg['id'] ?>">
+        <a href="/admin/message_show/<?= $msg['id'] ?>">
           <?= htmlspecialchars($msg['subject']) ?>
         </a>
       </td>
       <td><?= htmlspecialchars($msg['created_at']) ?></td>
       <td><?= $msg['is_read'] ? 'Oui' : 'Non' ?></td>
       <td>
-        <form method="post" action="/mangashelf/public/admin/message_delete/<?= $msg['id'] ?>" style="display:inline">
+        <form method="post" action="/admin/message_delete/<?= $msg['id'] ?>" style="display:inline">
           <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
           <button type="submit" onclick="return confirm('Supprimer ce message ?')">
             Supprimer

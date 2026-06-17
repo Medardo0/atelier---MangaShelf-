@@ -23,13 +23,7 @@ require_once __DIR__ . '/../core/Auth.php';
 require_once __DIR__ . '/../core/Database.php';
 
 // ── 1. Lire la demande HTTP ─────────────────────────────────
-// Supprimer le préfixe de base (/mangashelf/public) de l'URI
-// pour que http_in() reçoive uniquement la partie applicative.
-$base_prefix = '/mangashelf/public';
-$raw_uri     = $_SERVER['REQUEST_URI'] ?? '/';
-if (str_starts_with($raw_uri, $base_prefix)) {
-    $raw_uri = substr($raw_uri, strlen($base_prefix));
-}
+$raw_uri  = $_SERVER['REQUEST_URI'] ?? '/';
 $segments = http_in($raw_uri ?: '/');
 
 // ── 2. Donner un sens aux segments ─────────────────────────
