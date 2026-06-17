@@ -7,15 +7,14 @@
     <div class="hero-slide active">
       <div class="hero-slide-diagonal"></div>
       <div class="hero-slide-cover">
-        <img src="/assets/uploads/one-piece-b652bf5b.jpg" alt="One Piece">
+        <img src="/assets/uploads/hero-catalogue.png" alt="">
       </div>
       <div class="hero-slide-content">
-        <span class="hero-eyebrow">Bienvenue sur MangaShelf</span>
-        <h1>Découvrez des<br>milliers de mangas</h1>
-        <p>Explorez notre catalogue, filtrez par genre, auteur ou statut — trouvez votre prochaine lecture.</p>
+        <span class="hero-eyebrow">Catalogue MangaShelf</span>
+        <h1>Explorez le<br>catalogue manga</h1>
+        <p>Trouvez votre prochaine lecture avec une sélection claire, filtrable par genre, auteur et statut.</p>
         <div class="hero-actions">
           <a href="/catalogue" class="hero-cta">Parcourir le catalogue</a>
-          <a href="/auth/inscription" class="hero-cta hero-cta--outline">Créer un compte</a>
         </div>
       </div>
     </div>
@@ -23,12 +22,9 @@
     <!-- Slide 2 — Collections -->
     <div class="hero-slide">
       <div class="hero-slide-diagonal"></div>
-      <?php if (!empty($recent_mangas[1]['main_image'])): ?>
       <div class="hero-slide-cover">
-        <img src="/assets/uploads/<?= htmlspecialchars($recent_mangas[1]['main_image']) ?>"
-             alt="<?= htmlspecialchars($recent_mangas[1]['title'] ?? '') ?>">
+        <img src="/assets/uploads/hero-collection.png" alt="">
       </div>
-      <?php endif; ?>
       <div class="hero-slide-content">
         <span class="hero-eyebrow">Votre bibliothèque personnelle</span>
         <h1>Gérez votre<br>collection manga</h1>
@@ -42,12 +38,9 @@
     <!-- Slide 3 — Suivi -->
     <div class="hero-slide">
       <div class="hero-slide-diagonal"></div>
-      <?php if (!empty($recent_mangas[2]['main_image'])): ?>
       <div class="hero-slide-cover">
-        <img src="/assets/uploads/<?= htmlspecialchars($recent_mangas[2]['main_image']) ?>"
-             alt="<?= htmlspecialchars($recent_mangas[2]['title'] ?? '') ?>">
+        <img src="/assets/uploads/hero-tracking.png" alt="">
       </div>
-      <?php endif; ?>
       <div class="hero-slide-content">
         <span class="hero-eyebrow">Ne ratez plus aucune sortie</span>
         <h1>Suivez vos séries<br>tome par tome</h1>

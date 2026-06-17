@@ -5,6 +5,8 @@
  * Reçoit $content (HTML de la vue) et $page_title.
  */
 $page_title = $page_title ?? 'MangaShelf';
+$css_version = filemtime(__DIR__ . '/../../../public/assets/css/style.css') ?: time();
+$js_version  = filemtime(__DIR__ . '/../../../public/assets/js/main.js') ?: time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,7 +14,7 @@ $page_title = $page_title ?? 'MangaShelf';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($page_title) ?></title>
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=<?= $css_version ?>">
 </head>
 <body>
   <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -60,6 +62,6 @@ $page_title = $page_title ?? 'MangaShelf';
   <footer role="contentinfo">
     <p><small>&copy; 2025 MangaShelf</small></p>
   </footer>
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main.js?v=<?= $js_version ?>"></script>
 </body>
 </html>

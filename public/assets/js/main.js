@@ -1,8 +1,8 @@
-/* MangaShelf — main.js */
+/* MangaShelf - main.js */
 (function () {
   'use strict';
 
-  /* ── Hero Slider ─────────────────────────────────────── */
+  /* Hero slider */
   const slider = document.querySelector('.hero-slider');
   if (!slider) return;
 
@@ -22,22 +22,26 @@
     const prev = current;
     current = next;
 
-    /* Slide sortante → exit (part à gauche) */
+    /* Outgoing slide */
     slides[prev].classList.remove('active');
     slides[prev].classList.add('exit');
 
-    /* Slide entrante → active (arrive de droite) */
+    /* Incoming slide */
     slides[current].classList.remove('exit');
     slides[current].classList.add('active');
 
-    /* Nettoyage après la transition */
+    /* Cleanup after transition */
     setTimeout(() => {
       slides[prev].classList.remove('exit');
       animating = false;
     }, 580);
 
     /* Dots */
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    dots.forEach((dot, i) => {
+      const active = i === current;
+      dot.classList.toggle('active', active);
+      dot.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
   }
 
   function startAuto() {
