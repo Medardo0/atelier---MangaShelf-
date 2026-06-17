@@ -1,13 +1,13 @@
 # public/.htaccess
-# Redirige toutes les requêtes vers index.php
+# Redirige toutes les requetes vers index.php
 
 Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# Ne pas réécrire si le fichier/dossier existe (assets, uploads)
+# Ne pas reecrire si le fichier/dossier existe (assets, uploads)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Tout le reste → index.php
+# Tout le reste vers index.php
 RewriteRule ^(.*)$ index.php [QSA,L]

@@ -57,7 +57,7 @@
       'reading'   => 'En cours',
       'completed' => 'Terminé',
     ];
-    $redirect_back = '/manga/show/' . htmlspecialchars($manga['slug']);
+    $redirect_back = '/manga/show/' . $manga['slug'];
     ?>
     <div class="manga-collections">
       <h2>Mes collections</h2>
@@ -69,7 +69,7 @@
             <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
             <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
             <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
-            <input type="hidden" name="redirect_to"   value="<?= $redirect_back ?>">
+            <input type="hidden" name="redirect_to"   value="<?= htmlspecialchars($redirect_back) ?>">
             <button type="submit" style="background:var(--red);color:var(--white);border-color:var(--red);">
               ✓ <?= $collection_labels[$col['type']] ?? htmlspecialchars($col['type']) ?>
             </button>
@@ -79,7 +79,7 @@
             <input type="hidden" name="csrf_token"    value="<?= htmlspecialchars(csrf_token()) ?>">
             <input type="hidden" name="collection_id" value="<?= (int) $col['id'] ?>">
             <input type="hidden" name="item_id"       value="<?= (int) $manga['id'] ?>">
-            <input type="hidden" name="redirect_to"   value="<?= $redirect_back ?>">
+            <input type="hidden" name="redirect_to"   value="<?= htmlspecialchars($redirect_back) ?>">
             <button type="submit" style="background:transparent;color:var(--black);border-color:var(--grey-200);">
               + <?= $collection_labels[$col['type']] ?? htmlspecialchars($col['type']) ?>
             </button>

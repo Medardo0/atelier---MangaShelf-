@@ -40,13 +40,13 @@ via la règle de réécriture Apache dans `public/.htaccess`.
 
 ### Base de données
 
-- Schéma SQL : `mangashelf_schema.sql` à importer dans phpMyAdmin
-- 8 tables : `operator`, `item`, `item_tag`, `tag`, `message`, `collection`, `collection_item`, `search`
-- Données de test : 6 mangas, 13 genres/tags, 1 admin (`admin` / `password`), 1 utilisateur, 3 messages
+- Schéma SQL : `database.sql` à importer dans phpMyAdmin
+- 7 tables : `operator`, `item`, `item_tag`, `tag`, `message`, `collection`, `collection_item`
+- Données de base : 1 admin (`admin` / `password`)
 
 ### Router MVC (`core/http.php`, `core/router.php`, `core/html.php`)
 
-- `http_in()` — lit `$_SERVER['REQUEST_URI']` et retourne des segments propres (strip du préfixe `/mangashelf/public`)
+- `http_in()` — lit `$_SERVER['REQUEST_URI']` et retourne des segments propres
 - `route()` — convention `/entity/action/id`
 - `is_safe_segment()` — valide les segments avant construction des noms de fichiers
 - `run()` — charge le controller et appelle la fonction correspondante
@@ -179,9 +179,10 @@ Grammaire URL choisie : **query string** (`/catalogue?q=...&genres[]=...&page=2&
 
 ## Installation locale
 
-1. Cloner le dépôt dans `htdocs/mangashelf/`
-2. Démarrer Apache et MySQL via XAMPP
-3. Importer `mangashelf_schema.sql` dans phpMyAdmin (base : `mangashelf`)
-4. Accéder à `http://localhost/mangashelf/public/`
+1. Cloner le dépôt dans le dossier servi par Apache
+2. Configurer le virtual host local `mangashelf.local` vers le dossier `public/`
+3. Démarrer Apache et MySQL via XAMPP
+4. Importer `database.sql` dans phpMyAdmin (base : `mangashelf`)
+5. Accéder à `http://mangashelf.local/`
 
 Identifiants admin : `admin` / `password`
