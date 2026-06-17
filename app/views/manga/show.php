@@ -1,4 +1,4 @@
-﻿<nav aria-label="Fil d'ariane">
+<nav aria-label="Fil d'ariane">
   <ol>
     <li><a href="/">Accueil</a></li>
     <li><a href="/catalogue">Catalogue</a></li>

@@ -1,4 +1,4 @@
-﻿<div class="contact-page">
+<div class="contact-page">
 <h1>Contact</h1>
 
 <?php if ($sent): ?>

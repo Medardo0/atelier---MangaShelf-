@@ -1,4 +1,4 @@
-﻿<!-- ── Hero Slider ───────────────────────────────────────── -->
+<!-- ── Hero Slider ───────────────────────────────────────── -->
 <div class="hero-slider" aria-label="Présentation MangaShelf" role="region">
 
   <div class="hero-slides" id="heroSlides">

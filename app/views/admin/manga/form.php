@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $is_edit = $manga !== null;
 
 $title_val       = $is_edit ? $manga['title']             : ($old['title'] ?? '');

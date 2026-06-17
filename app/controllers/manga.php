@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../models/manga.php';
 require_once __DIR__ . '/../models/collection.php';
 

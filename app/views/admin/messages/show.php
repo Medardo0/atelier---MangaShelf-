@@ -1,4 +1,4 @@
-﻿<nav aria-label="Retour">
+<nav aria-label="Retour">
   <a href="/admin/messages">← Retour aux messages</a>
 </nav>
 

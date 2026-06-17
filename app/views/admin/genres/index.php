@@ -1,4 +1,4 @@
-﻿<h1>Genres &amp; Tags</h1>
+<h1>Genres &amp; Tags</h1>
 <div class="admin-toolbar">
   <a href="/admin/genre_create">+ Ajouter</a>
 </div>

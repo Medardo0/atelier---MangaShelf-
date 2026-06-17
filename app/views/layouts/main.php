@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * app/views/layouts/main.php
  * Template public partagé par toutes les vues publiques.

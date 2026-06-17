@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * app/controllers/admin.php
  * Controller d'administration.

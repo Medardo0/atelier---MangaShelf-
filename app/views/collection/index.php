@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $labels = [
     'favorites' => 'Favoris',
     'wishlist'  => 'Wishlist',

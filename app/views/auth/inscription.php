@@ -1,4 +1,4 @@
-﻿<div class="auth-page">
+<div class="auth-page">
 <h1>Créer un compte</h1>
 <p>Rejoignez MangaShelf pour gérer votre collection, vos favoris et votre wishlist.</p>
 

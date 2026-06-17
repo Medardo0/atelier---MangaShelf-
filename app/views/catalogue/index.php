@@ -1,4 +1,4 @@
-﻿<h1>Catalogue de mangas <span>(<?= $total ?>)</span></h1>
+<h1>Catalogue de mangas <span>(<?= $total ?>)</span></h1>
 
 <form action="/catalogue" method="get" class="catalogue-filters">
 

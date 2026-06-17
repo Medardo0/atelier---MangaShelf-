@@ -1,4 +1,4 @@
-﻿<div class="auth-page">
+<div class="auth-page">
 <h1>Connexion</h1>
 <p>Accédez à votre collection personnelle de mangas.</p>
 

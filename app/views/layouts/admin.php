@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * app/views/layouts/admin.php
  * Template admin partagé.

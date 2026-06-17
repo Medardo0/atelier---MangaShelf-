@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../models/collection.php';
 
 function collection_safe_redirect(string $redirect_to): string

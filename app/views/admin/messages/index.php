@@ -1,4 +1,4 @@
-﻿<h1>Messages</h1>
+<h1>Messages</h1>
 
 <?php if (empty($messages)): ?>
 <p>Aucun message.</p>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $is_edit  = $tag !== null;
 $name_val = $is_edit ? $tag['name'] : ($old['name'] ?? '');
 $type_val = $is_edit ? $tag['type'] : ($old['type'] ?? 'tag');

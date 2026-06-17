@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../models/operator.php';
 
 function auth_connexion(?string $id = null): string

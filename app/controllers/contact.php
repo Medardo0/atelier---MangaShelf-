@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../models/message.php';
 
 function contact_index(?string $id = null): string

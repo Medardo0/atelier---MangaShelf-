@@ -1,4 +1,4 @@
-﻿<h1>Mangas <span>(<?= count($mangas) ?>)</span></h1>
+<h1>Mangas <span>(<?= count($mangas) ?>)</span></h1>
 <div class="admin-toolbar">
   <a href="/admin/manga_create">+ Ajouter un manga</a>
 </div>
