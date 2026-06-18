@@ -27,16 +27,17 @@ PHP 8.1+ | MySQL | HTML5 | CSS3 | JavaScript ES6+ | Architecture MVC
 
 Le projet suit une architecture MVC sans framework :
 
-- `public/` → Point d'entrée unique (`index.php`) + assets
-- `app/controllers/` → Contrôleurs (logique métier)
-- `app/models/` → Modèles (accès base de données via PDO)
-- `app/views/` → Vues (templates PHP)
-- `core/` → Router, Auth, Database, helpers HTML
-- `config/` → Configuration BDD et routes
+- `index.php` -> Front-controller unique de l'application
+- `public/` -> Assets publics + relais `public/index.php`
+- `app/controllers/` -> Controleurs publics
+- `app/admin/controllers/` -> Controleurs du back-office
+- `app/models/` -> Modeles (acces base de donnees via PDO)
+- `app/views/` -> Vues publiques
+- `app/admin/views/` -> Vues du back-office
+- `core/` -> HTTP, Router, Auth, Query, helpers HTML
+- `config/` -> Configuration BDD
 
-Seul le dossier `public/` est exposé au navigateur.
-Toutes les requêtes sont redirigées vers `public/index.php`
-via la règle de réécriture Apache dans `public/.htaccess`.
+Toutes les requetes sont redirigees vers `index.php` via la regle de reecriture Apache.
 
 ### Base de données
 
@@ -62,11 +63,11 @@ via la règle de réécriture Apache dans `public/.htaccess`.
 - `require_auth()` — protection des pages admin + expiration de session
 - Verrouillage du compte après 5 tentatives échouées (`locked_until`)
 
-### Base de données (`core/Database.php`)
+### Base de donnees (`config/database.php`)
 
-- Singleton PDO — une seule connexion partagée
-- `ATTR_EMULATE_PREPARES = false` — paramètres nommés non réutilisables dans la même requête
-- Gestion des erreurs avec `error_log()`
+- Connexion PDO centralisee dans `config/database.php`
+- Variable `$pdo` transmise au router
+- Helper `db()` conserve pour les modeles existants
 
 ### Modèles
 
@@ -86,10 +87,7 @@ via la règle de réécriture Apache dans `public/.htaccess`.
 | `auth.php` | `auth_connexion()`, `auth_inscription()`, `auth_logout()` | Auth utilisateur public |
 | `collection.php` | `collection_index()`, `collection_add()`, `collection_remove()` | Collections personnelles |
 | `contact.php` | `contact_index()` | Formulaire de contact public |
-| `admin.php` | `admin_login()`, `admin_dashboard()`, `admin_logout()` | Session admin |
-| `admin.php` | `admin_mangas()`, `admin_manga_create()`, `admin_manga_edit()`, `admin_manga_delete()` | CRUD mangas |
-| `admin.php` | `admin_genres()`, `admin_genre_create()`, `admin_genre_edit()`, `admin_genre_delete()` | CRUD genres/tags |
-| `admin.php` | `admin_messages()`, `admin_message_show()`, `admin_message_delete()` | Gestion messages |
+| `app/admin/controllers/*` | `dashboard_index()`, `mangas_index()`, `genres_index()`, etc. | Back-office admin |
 
 ### Catalogue (`/catalogue`)
 

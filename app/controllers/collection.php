@@ -14,7 +14,7 @@ function collection_safe_redirect(string $redirect_to): string
     return $redirect_to;
 }
 
-function collection_index(?string $id = null): string
+function collection_index(PDO $pdo, ?string $id = null): string
 {
     if (!is_logged_in()) {
         header('Location: /auth/connexion');
@@ -29,14 +29,14 @@ function collection_index(?string $id = null): string
         $items_by_collection[$col['id']] = collection_get_items((int) $col['id']);
     }
 
-    return render_in_layout('collection/index', 'layouts/main', [
+    return render_in_layout('collection/index', '_layout', [
         'page_title'          => 'Mes collections — MangaShelf',
         'collections'         => $collections,
         'items_by_collection' => $items_by_collection,
     ]);
 }
 
-function collection_add(?string $id = null): string
+function collection_add(PDO $pdo, ?string $id = null): string
 {
     if (!is_logged_in()) {
         header('Location: /auth/connexion');
@@ -61,7 +61,7 @@ function collection_add(?string $id = null): string
     exit;
 }
 
-function collection_remove(?string $id = null): string
+function collection_remove(PDO $pdo, ?string $id = null): string
 {
     if (!is_logged_in()) {
         header('Location: /auth/connexion');

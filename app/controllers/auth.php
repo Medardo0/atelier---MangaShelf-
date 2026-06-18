@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/operator.php';
 
-function auth_connexion(?string $id = null): string
+function auth_connexion(PDO $pdo, ?string $id = null): string
 {
     if (is_logged_in()) {
         header('Location: /admin');
@@ -42,13 +42,13 @@ function auth_connexion(?string $id = null): string
         }
     }
 
-    return render_in_layout('auth/connexion', 'layouts/main', [
+    return render_in_layout('auth/connexion', '_layout', [
         'page_title' => 'Connexion — MangaShelf',
         'errors'     => $errors,
     ]);
 }
 
-function auth_inscription(?string $id = null): string
+function auth_inscription(PDO $pdo, ?string $id = null): string
 {
     if (is_logged_in()) {
         header('Location: /');
@@ -102,14 +102,14 @@ function auth_inscription(?string $id = null): string
         }
     }
 
-    return render_in_layout('auth/inscription', 'layouts/main', [
+    return render_in_layout('auth/inscription', '_layout', [
         'page_title' => 'Inscription — MangaShelf',
         'errors'     => $errors,
         'old'        => $old,
     ]);
 }
 
-function auth_logout(?string $id = null): string
+function auth_logout(PDO $pdo, ?string $id = null): string
 {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         verify_csrf();

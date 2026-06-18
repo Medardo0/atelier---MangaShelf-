@@ -1,6 +1,6 @@
 <?php
 /**
- * app/controllers/admin.php
+ * app/admin/controllers/_actions.php
  * Controller d'administration.
  *
  * Routes gérées :
@@ -11,10 +11,10 @@
  *   POST /admin/logout       → admin_logout()
  */
 
-require_once __DIR__ . '/../../core/Auth.php';
-require_once __DIR__ . '/../models/manga.php';
-require_once __DIR__ . '/../models/tag.php';
-require_once __DIR__ . '/../models/message.php';
+require_once __DIR__ . '/../../../core/Auth.php';
+require_once __DIR__ . '/../../models/manga.php';
+require_once __DIR__ . '/../../models/tag.php';
+require_once __DIR__ . '/../../models/message.php';
 
 function upload_cover(string $slug): ?string
 {
@@ -31,12 +31,12 @@ function upload_cover(string $slug): ?string
     if ($file['size'] > 2 * 1024 * 1024) return null;
 
     $filename = $slug . '-' . bin2hex(random_bytes(4)) . '.' . $allowed[$mime];
-    $dest     = __DIR__ . '/../../public/assets/uploads/' . $filename;
+    $dest     = __DIR__ . '/../../../public/assets/uploads/' . $filename;
 
     return move_uploaded_file($file['tmp_name'], $dest) ? $filename : null;
 }
 
-function admin_index(?string $id = null): string
+function admin_index(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -59,7 +59,7 @@ function admin_index(?string $id = null): string
         'recent_mangas' => $stmt->fetchAll(),
     ];
 
-    return render_in_layout('admin/dashboard/index', 'layouts/admin', $data);
+    return render_in_layout('admin/dashboard/index', 'admin/_layout', $data);
 }
 
 // function admin_login(?string $id = null): string
@@ -106,18 +106,18 @@ function admin_index(?string $id = null): string
 // }
 
 
-function admin_mangas(?string $id = null): string
+function admin_mangas(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
-    return render_in_layout('admin/manga/list', 'layouts/admin', [
+    return render_in_layout('admin/manga/list', 'admin/_layout', [
         'page_title' => 'Mangas — Admin',
         'active_nav' => 'mangas',
         'mangas'     => manga_get_all_admin(),
     ]);
 }
 
-function admin_manga_create(?string $id = null): string
+function admin_manga_create(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -155,7 +155,7 @@ function admin_manga_create(?string $id = null): string
         }
     }
 
-    return render_in_layout('admin/manga/form', 'layouts/admin', [
+    return render_in_layout('admin/manga/form', 'admin/_layout', [
         'page_title' => 'Ajouter un manga — Admin',
         'active_nav' => 'mangas',
         'errors'     => $errors,
@@ -165,7 +165,7 @@ function admin_manga_create(?string $id = null): string
     ]);
 }
 
-function admin_manga_edit(?string $id = null): string
+function admin_manga_edit(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -205,7 +205,7 @@ function admin_manga_edit(?string $id = null): string
             if ($cover !== null) {
                 // Supprimer l'ancienne image si elle existait
                 if (!empty($manga['main_image'])) {
-                    @unlink(__DIR__ . '/../../public/assets/uploads/' . $manga['main_image']);
+                    @unlink(__DIR__ . '/../../../public/assets/uploads/' . $manga['main_image']);
                 }
                 $new_data['main_image'] = $cover;
             }
@@ -228,7 +228,7 @@ function admin_manga_edit(?string $id = null): string
         ]);
     }
 
-    return render_in_layout('admin/manga/form', 'layouts/admin', [
+    return render_in_layout('admin/manga/form', 'admin/_layout', [
         'page_title' => 'Modifier ' . $manga['title'] . ' — Admin',
         'active_nav' => 'mangas',
         'errors'     => $errors,
@@ -238,7 +238,7 @@ function admin_manga_edit(?string $id = null): string
     ]);
 }
 
-function admin_manga_delete(?string $id = null): string
+function admin_manga_delete(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -251,17 +251,17 @@ function admin_manga_delete(?string $id = null): string
     exit;
 }
 
-function admin_genres(?string $id = null): string
+function admin_genres(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
-    return render_in_layout('admin/genres/index', 'layouts/admin', [
+    return render_in_layout('admin/genres/index', 'admin/_layout', [
         'page_title' => 'Genres & Tags — Admin',
         'active_nav' => 'genres',
         'tags'       => tag_get_all(),
     ]);
 }
 
-function admin_genre_create(?string $id = null): string
+function admin_genre_create(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -284,7 +284,7 @@ function admin_genre_create(?string $id = null): string
         }
     }
 
-    return render_in_layout('admin/genres/form', 'layouts/admin', [
+    return render_in_layout('admin/genres/form', 'admin/_layout', [
         'page_title' => 'Ajouter un genre/tag — Admin',
         'active_nav' => 'genres',
         'errors'     => $errors,
@@ -293,7 +293,7 @@ function admin_genre_create(?string $id = null): string
     ]);
 }
 
-function admin_genre_edit(?string $id = null): string
+function admin_genre_edit(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -321,7 +321,7 @@ function admin_genre_edit(?string $id = null): string
         $tag = array_merge($tag, ['name' => $name, 'type' => $type]);
     }
 
-    return render_in_layout('admin/genres/form', 'layouts/admin', [
+    return render_in_layout('admin/genres/form', 'admin/_layout', [
         'page_title' => 'Modifier ' . $tag['name'] . ' — Admin',
         'active_nav' => 'genres',
         'errors'     => $errors,
@@ -330,7 +330,7 @@ function admin_genre_edit(?string $id = null): string
     ]);
 }
 
-function admin_genre_delete(?string $id = null): string
+function admin_genre_delete(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -343,10 +343,10 @@ function admin_genre_delete(?string $id = null): string
     exit;
 }
 
-function admin_messages(?string $id = null): string
+function admin_messages(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
-    return render_in_layout('admin/messages/index', 'layouts/admin', [
+    return render_in_layout('admin/messages/index', 'admin/_layout', [
         'page_title' => 'Messages — Admin',
         'active_nav' => 'messages',
         'messages'   => message_get_all(),
@@ -354,7 +354,7 @@ function admin_messages(?string $id = null): string
     ]);
 }
 
-function admin_message_show(?string $id = null): string
+function admin_message_show(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 
@@ -365,7 +365,7 @@ function admin_message_show(?string $id = null): string
 
     message_mark_read((int) $id);
 
-    return render_in_layout('admin/messages/show', 'layouts/admin', [
+    return render_in_layout('admin/messages/show', 'admin/_layout', [
         'page_title' => $message['subject'] . ' — Admin',
         'active_nav' => 'messages',
         'message'    => $message,
@@ -373,7 +373,7 @@ function admin_message_show(?string $id = null): string
     ]);
 }
 
-function admin_message_delete(?string $id = null): string
+function admin_message_delete(PDO $pdo, ?string $id = null): string
 {
     require_auth('admin');
 

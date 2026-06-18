@@ -1,6 +1,6 @@
 <?php
 /**
- * app/views/layouts/admin.php
+ * app/admin/views/_layout.php
  * Template admin partagé.
  */
 $page_title = $page_title ?? 'Administration';

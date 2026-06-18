@@ -1,12 +1,12 @@
 <?php
 /**
- * app/views/layouts/main.php
+ * app/views/_layout.php
  * Template public partagé par toutes les vues publiques.
  * Reçoit $content (HTML de la vue) et $page_title.
  */
 $page_title = $page_title ?? 'MangaShelf';
-$css_version = filemtime(__DIR__ . '/../../../public/assets/css/style.css') ?: time();
-$js_version  = filemtime(__DIR__ . '/../../../public/assets/js/main.js') ?: time();
+$css_version = filemtime(__DIR__ . '/../../public/assets/css/style.css') ?: time();
+$js_version  = filemtime(__DIR__ . '/../../public/assets/js/main.js') ?: time();
 ?>
 <!DOCTYPE html>
 <html lang="fr">

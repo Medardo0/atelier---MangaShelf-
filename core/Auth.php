@@ -33,7 +33,7 @@ function current_role(): string
 function require_auth(string $role = ''): void
 {
     if (!is_logged_in()) {
-        header('Location: /auth/login?expired=1');
+        header('Location: /auth/connexion?expired=1');
         exit;
     }
     if ($role !== '' && current_role() !== $role) {

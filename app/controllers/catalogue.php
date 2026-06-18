@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../models/manga.php';
 require_once __DIR__ . '/../models/tag.php';
 
-function catalogue_index(?string $id = null): string
+function catalogue_index(PDO $pdo, ?string $id = null): string
 {
     $filters = [];
 
@@ -27,7 +27,7 @@ function catalogue_index(?string $id = null): string
     $total_pages = max(1, (int) ceil($total / $per_page));
     $current_page = $filters['page'] ?? 1;
 
-    return render_in_layout('catalogue/index', 'layouts/main', [
+    return render_in_layout('catalogue/index', '_layout', [
         'page_title'   => 'Catalogue — MangaShelf',
         'mangas'       => manga_get_all($filters),
         'total'        => $total,

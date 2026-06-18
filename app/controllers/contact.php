@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/message.php';
 
-function contact_index(?string $id = null): string
+function contact_index(PDO $pdo, ?string $id = null): string
 {
     $errors = [];
     $old    = [];
@@ -28,7 +28,7 @@ function contact_index(?string $id = null): string
         }
     }
 
-    return render_in_layout('contact/index', 'layouts/main', [
+    return render_in_layout('contact/index', '_layout', [
         'page_title' => 'Contact — MangaShelf',
         'errors'     => $errors,
         'old'        => $old,

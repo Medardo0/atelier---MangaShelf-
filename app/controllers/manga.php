@@ -2,13 +2,13 @@
 require_once __DIR__ . '/../models/manga.php';
 require_once __DIR__ . '/../models/collection.php';
 
-function manga_index(?string $id = null): string
+function manga_index(PDO $pdo, ?string $id = null): string
 {
     header('Location: /catalogue');
     exit;
 }
 
-function manga_show(?string $id = null): string
+function manga_show(PDO $pdo, ?string $id = null): string
 {
     if (empty($id)) {
         return error_page(400, 'Identifiant manquant.');
@@ -25,7 +25,7 @@ function manga_show(?string $id = null): string
         ? collection_get_item_memberships((int) $_SESSION['user_id'], $manga['id'])
         : [];
 
-    return render_in_layout('manga/show', 'layouts/main', [
+    return render_in_layout('manga/show', '_layout', [
         'page_title'  => $manga['title'] . ' — MangaShelf',
         'manga'       => $manga,
         'similaires'  => $similaires,
