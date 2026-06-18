@@ -14,10 +14,17 @@ function csrf_token(): string
 function verify_csrf(): void
 {
     $token = $_POST['csrf_token'] ?? '';
-    if (!hash_equals($_SESSION['csrf_token'] ?? '', $token)) {
+    if (!csrf_is_valid($token)) {
         http_response_code(403);
         exit('Token CSRF invalide.');
     }
+}
+
+function csrf_is_valid(?string $token): bool
+{
+    return is_string($token)
+        && $token !== ''
+        && hash_equals($_SESSION['csrf_token'] ?? '', $token);
 }
 
 function is_logged_in(): bool

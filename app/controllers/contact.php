@@ -7,19 +7,21 @@ function contact_index(PDO $pdo, ?string $id = null): string
     $old    = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        verify_csrf();
-
         $old     = $_POST;
         $name    = trim($_POST['name']    ?? '');
         $email   = trim($_POST['email']   ?? '');
         $subject = trim($_POST['subject'] ?? '');
         $body    = trim($_POST['body']    ?? '');
 
-        if ($name    === '') $errors[] = 'Votre nom est obligatoire.';
-        if ($email   === '') $errors[] = 'Votre adresse e-mail est obligatoire.';
-        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Adresse e-mail invalide.';
-        if ($subject === '') $errors[] = 'Le sujet est obligatoire.';
-        if ($body    === '') $errors[] = 'Le message est obligatoire.';
+        if (!csrf_is_valid($_POST['csrf_token'] ?? null)) {
+            $errors[] = 'Votre session a expire. Rechargez la page puis renvoyez le message.';
+        } else {
+            if ($name    === '') $errors[] = 'Votre nom est obligatoire.';
+            if ($email   === '') $errors[] = 'Votre adresse e-mail est obligatoire.';
+            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Adresse e-mail invalide.';
+            if ($subject === '') $errors[] = 'Le sujet est obligatoire.';
+            if ($body    === '') $errors[] = 'Le message est obligatoire.';
+        }
 
         if (empty($errors)) {
             message_create($name, $email, $subject, $body);
